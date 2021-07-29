@@ -34,6 +34,34 @@ void Renderer::Init() {
     shaders.Init();
 }
 
+void Renderer::DrawTri() {
+	shaders.basic.Bind();
+
+	unsigned int buffer, arrays;
+	glGenVertexArrays(1, &arrays);
+	glGenBuffers(1, &buffer);
+	glBindBuffer(GL_ARRAY_BUFFER, buffer);
+	glBindVertexArray(arrays);
+
+	float verticies[] = {
+		-0.5f, -0.5f, 0.0f,
+		 0.5f, -0.5f, 0.0f,
+		 0.0f,  0.5f, 0.0f,
+	};
+
+	glBufferData(GL_ARRAY_BUFFER, 4 * 3 * 3, verticies, GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+	glDrawArrays(GL_TRIANGLES, 0, 3);
+	
+	glDeleteVertexArrays(1, &arrays);
+	glDeleteBuffers(1, &buffer);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+	shaders.Unbind();
+}
+
 void Renderer::BeginFrame() {
 	glClear(GL_COLOR_BUFFER_BIT);
 }

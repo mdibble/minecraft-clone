@@ -11,6 +11,7 @@ public:
     void Init();
     void EndFrame();
     void BeginFrame();
+    void DrawTri();
 private:
     ShaderCollection shaders;
     GLFWwindow* window;
