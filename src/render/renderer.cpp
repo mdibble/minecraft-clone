@@ -37,27 +37,40 @@ void Renderer::Init() {
 void Renderer::DrawTri() {
 	shaders.basic.Bind();
 
-	unsigned int buffer, arrays;
-	glGenVertexArrays(1, &arrays);
-	glGenBuffers(1, &buffer);
-	glBindBuffer(GL_ARRAY_BUFFER, buffer);
-	glBindVertexArray(arrays);
-
 	float verticies[] = {
-		-0.5f, -0.5f, 0.0f,
-		 0.5f, -0.5f, 0.0f,
-		 0.0f,  0.5f, 0.0f,
+		 0.5f,   0.5f,	0.0f,
+		 0.5f,  -0.5f,	0.0f,
+		-0.5f,  -0.5f,	0.0f,
+		-0.5f,   0.5f,	0.0f,
+	};
+	unsigned int indicies[] = {
+		0, 1, 3,
+		1, 2, 3,
 	};
 
-	glBufferData(GL_ARRAY_BUFFER, 4 * 3 * 3, verticies, GL_STATIC_DRAW);
+	unsigned int arrayBuffer, elementBuffer, vertexArray;
+
+	glGenVertexArrays(1, &vertexArray);
+	glGenBuffers(1, &arrayBuffer);
+	glGenBuffers(1, &elementBuffer);
+
+	glBindVertexArray(vertexArray);
+	glBindBuffer(GL_ARRAY_BUFFER, arrayBuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(verticies), verticies, GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBuffer);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indicies), indicies, GL_STATIC_DRAW);
+
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
-	glDrawArrays(GL_TRIANGLES, 0, 3);
+
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	
-	glDeleteVertexArrays(1, &arrays);
-	glDeleteBuffers(1, &buffer);
+	glDeleteVertexArrays(1, &vertexArray);
+	glDeleteBuffers(1, &arrayBuffer);
+	glDeleteBuffers(1, &elementBuffer);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 	shaders.Unbind();
 }
