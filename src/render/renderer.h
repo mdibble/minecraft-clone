@@ -4,6 +4,7 @@
 #include <GLFW/glfw3.h>
 
 #include "shader.h"
+#include "vertex_array.h"
 
 class Renderer {
 public:
@@ -11,9 +12,10 @@ public:
     void Init();
     void EndFrame();
     void BeginFrame();
-    void DrawTri();
+    void DrawPoly();
 private:
     ShaderCollection shaders;
+    VertexArrayCollection vertexArrays;
     GLFWwindow* window;
     int viewportW, viewportH;
     void ViewportResizeCallback(int w, int h);

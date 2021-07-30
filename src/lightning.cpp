@@ -12,7 +12,7 @@ void Lightning::Init() {
 void Lightning::Run() {
     while (true) {
         renderer.BeginFrame();
-        renderer.DrawTri();
+        renderer.DrawPoly();
         renderer.EndFrame();
     }
 }
