@@ -10,9 +10,21 @@ void Lightning::Init() {
 }
 
 void Lightning::Run() {
+    float verticies[] = {
+         0.5f,   0.5f,	 0.0f,       0.0f,   0.0f,
+         0.5f,  -0.5f,	 0.0f,       0.0f,   0.0f,
+        -0.5f,  -0.5f,	 0.0f,       0.0f,   0.0f,
+        -0.5f,   0.5f,	 0.0f,       0.0f,   0.0f,
+    };
+
+    unsigned int indicies[] = {
+        0, 1, 3,
+        1, 2, 3,
+    };
+
     while (true) {
         renderer.BeginFrame();
-        renderer.DrawPoly();
+        renderer.DrawMesh(verticies, sizeof(verticies), indicies, sizeof(indicies));
         renderer.EndFrame();
     }
 }

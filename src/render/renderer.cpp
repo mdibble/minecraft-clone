@@ -35,24 +35,12 @@ void Renderer::Init() {
 	vertexArrays.Init();
 }
 
-void Renderer::DrawPoly() {
+void Renderer::DrawMesh(float vert[], int vertCount, unsigned int ind[], int indCount) {
 	shaders.basic.Bind();
 	vertexArrays.basic.Bind();
 
-	float verticies[] = {
-		 0.5f,   0.5f,	 0.0f,       0.0f,   0.0f,
-		 0.5f,  -0.5f,	 0.0f,       0.0f,   0.0f,
-		-0.5f,  -0.5f,	 0.0f,       0.0f,   0.0f,
-		-0.5f,   0.5f,	 0.0f,       0.0f,   0.0f,
-	};
-
-	unsigned int indicies[] = {
-		0, 1, 3,
-		1, 2, 3,
-	};
-
-	vertexArrays.basic.SendVerticies(verticies, sizeof(verticies));
-	vertexArrays.basic.SendIndicies(indicies, sizeof(indicies));
+	vertexArrays.basic.SendVerticies(vert, vertCount);
+	vertexArrays.basic.SendIndicies(ind, indCount);
 
 	vertexArrays.basic.Draw();
 

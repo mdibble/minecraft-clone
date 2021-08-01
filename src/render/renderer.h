@@ -12,7 +12,7 @@ public:
     void Init();
     void EndFrame();
     void BeginFrame();
-    void DrawPoly();
+    void DrawMesh(float vert[], int vertCount, unsigned int ind[], int indCount);
 private:
     ShaderCollection shaders;
     VertexArrayCollection vertexArrays;
