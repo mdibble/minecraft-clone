@@ -42,7 +42,30 @@ void Renderer::DrawMesh(float vert[], int vertCount, unsigned int ind[], int ind
 
 	vertexArrays.basic.Draw();
 
-	vertexArrays.Unbind();
+	vertexArrays.basic.Unbind();
+}
+
+void Renderer::DrawSky() {
+	static float vert[] = {
+		-1.0f,  -1.0f,	 0.0f,       0.0f,   0.0f,
+		-1.0f,   1.0f,	 0.0f,       0.0f,   1.0f,
+		 1.0f,   1.0f,	 0.0f,       1.0f,   1.0f,
+		 1.0f,  -1.0f,	 0.0f,       1.0f,   0.0f,
+	};
+
+	static unsigned int ind[] = {
+		0, 1, 2,
+		0, 2, 3,
+	};
+
+	vertexArrays.sky.Bind();
+
+	vertexArrays.sky.SendVerticies(vert, sizeof(vert));
+	vertexArrays.sky.SendIndicies(ind, sizeof(ind));
+
+	vertexArrays.sky.Draw();
+
+	vertexArrays.sky.Unbind();
 }
 
 void Renderer::BeginFrame() {

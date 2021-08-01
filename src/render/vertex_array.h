@@ -9,7 +9,7 @@
 class VertexArray {
 public:
     VertexArray();
-    void Init(std::string vertPath, std::string fragPath);
+    void Init(std::string vertPath, std::string fragPath, std::string texPath);
     void Bind();
     void Unbind();
     void SendVerticies(float data[], int size);
@@ -24,7 +24,6 @@ private:
 class VertexArrayCollection {
 public:
     void Init();
-    void Unbind();
     VertexArray basic;
     VertexArray sky;
 };

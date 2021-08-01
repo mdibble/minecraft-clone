@@ -8,7 +8,7 @@ VertexArray::VertexArray() {
     elementCount = 0;
 }
 
-void VertexArray::Init(std::string vertPath, std::string fragPath) {
+void VertexArray::Init(std::string vertPath, std::string fragPath, std::string texPath) {
     std::cout << "Initializing vertex array" << std::endl;
     
     shader.Init(vertPath, fragPath);
@@ -32,7 +32,7 @@ void VertexArray::Init(std::string vertPath, std::string fragPath) {
 
     int texW, texH, texNrChannels;
     stbi_set_flip_vertically_on_load(true);
-    unsigned char* data = stbi_load("texture/test.jpg", &texW, &texH, &texNrChannels, 0);
+    unsigned char* data = stbi_load(texPath.c_str(), &texW, &texH, &texNrChannels, 0);
     if (data) {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texW, texH, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
     }
@@ -68,6 +68,7 @@ void VertexArray::Bind() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
+    glBindTexture(GL_TEXTURE_2D, texture);
 }
 
 void VertexArray::Unbind() {
@@ -75,17 +76,11 @@ void VertexArray::Unbind() {
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-}
-
-void VertexArrayCollection::Unbind() {
-    glUseProgram(0);
-    glBindVertexArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void VertexArrayCollection::Init() {
     std::cout << "Initializing vertex array collection" << std::endl;
-    basic.Init("shader/basic.vert", "shader/basic.frag");
-    sky.Init("shader/sky.vert", "shader/sky.frag");
+    basic.Init("shader/basic.vert", "shader/basic.frag", "texture/test.jpg");
+    sky.Init("shader/sky.vert", "shader/sky.frag", "texture/sky.jpg");
 }

@@ -24,6 +24,7 @@ void Lightning::Run() {
 
     while (true) {
         renderer.BeginFrame();
+        renderer.DrawSky();
         renderer.DrawMesh(verticies, sizeof(verticies), indicies, sizeof(indicies));
         renderer.EndFrame();
     }

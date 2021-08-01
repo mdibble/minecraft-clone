@@ -13,6 +13,7 @@ public:
     void EndFrame();
     void BeginFrame();
     void DrawMesh(float vert[], int vertCount, unsigned int ind[], int indCount);
+    void DrawSky();
 private:
     VertexArrayCollection vertexArrays;
     GLFWwindow* window;
