@@ -76,6 +76,10 @@ void Shader::Unbind() {
     glUseProgram(0);
 }
 
+void Shader::SetInt(const char* name, int val) {
+    glUniform1i(glGetUniformLocation(id, name), 0);
+}
+
 bool Shader::DidCompilationSucceed(unsigned int shader) {
     int success;
     char infoLog[1024];
@@ -98,17 +102,4 @@ bool Shader::DidLinkingSucceed(unsigned int shader) {
         return false;
     }
     return true;
-}
-
-ShaderCollection::ShaderCollection() {
-}
-
-void ShaderCollection::Unbind() {
-    glUseProgram(0);
-}
-
-void ShaderCollection::Init() {
-    std::cout << "Initializing shader collection" << std::endl;
-    basic.Init("shader/basic.vert", "shader/basic.frag");
-    sky.Init("shader/sky.vert", "shader/sky.frag");
 }

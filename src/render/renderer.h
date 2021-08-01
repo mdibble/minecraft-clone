@@ -14,7 +14,6 @@ public:
     void BeginFrame();
     void DrawMesh(float vert[], int vertCount, unsigned int ind[], int indCount);
 private:
-    ShaderCollection shaders;
     VertexArrayCollection vertexArrays;
     GLFWwindow* window;
     int viewportW, viewportH;

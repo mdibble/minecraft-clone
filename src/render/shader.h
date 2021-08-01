@@ -13,18 +13,9 @@ public:
     void Init(std::string vertPath, std::string fragPath);
     void Bind();
     void Unbind();
+    void SetInt(const char* name, int val);
 private:
     unsigned int id;
     bool DidCompilationSucceed(unsigned int shader);
     bool DidLinkingSucceed(unsigned int shader);
-};
-
-class ShaderCollection {
-public:
-    ShaderCollection();
-    void Init();
-    void Unbind();
-    Shader basic;
-    Shader sky;
-private:
 };

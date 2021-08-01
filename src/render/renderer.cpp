@@ -31,12 +31,10 @@ void Renderer::Init() {
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 
     std::cout << "Initializing renderer" << std::endl;
-    shaders.Init();
 	vertexArrays.Init();
 }
 
 void Renderer::DrawMesh(float vert[], int vertCount, unsigned int ind[], int indCount) {
-	shaders.basic.Bind();
 	vertexArrays.basic.Bind();
 
 	vertexArrays.basic.SendVerticies(vert, vertCount);
@@ -45,7 +43,6 @@ void Renderer::DrawMesh(float vert[], int vertCount, unsigned int ind[], int ind
 	vertexArrays.basic.Draw();
 
 	vertexArrays.Unbind();
-	shaders.Unbind();
 }
 
 void Renderer::BeginFrame() {

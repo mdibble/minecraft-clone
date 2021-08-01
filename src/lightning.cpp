@@ -11,10 +11,10 @@ void Lightning::Init() {
 
 void Lightning::Run() {
     float verticies[] = {
-         0.5f,   0.5f,	 0.0f,       0.0f,   0.0f,
-         0.5f,  -0.5f,	 0.0f,       0.0f,   0.0f,
+         0.5f,   0.5f,	 0.0f,       1.0f,   1.0f,
+         0.5f,  -0.5f,	 0.0f,       1.0f,   0.0f,
         -0.5f,  -0.5f,	 0.0f,       0.0f,   0.0f,
-        -0.5f,   0.5f,	 0.0f,       0.0f,   0.0f,
+        -0.5f,   0.5f,	 0.0f,       0.0f,   1.0f,
     };
 
     unsigned int indicies[] = {

@@ -1,23 +1,26 @@
 #pragma once
 
 #include <glad/glad.h>
+#include <stb_image.h>
 #include <iostream>
+
+#include "shader.h"
 
 class VertexArray {
 public:
     VertexArray();
-    void Init();
+    void Init(std::string vertPath, std::string fragPath);
     void Bind();
     void Unbind();
     void SendVerticies(float data[], int size);
     void SendIndicies(unsigned int data[], int size);
     void Draw();
 private:
-    unsigned int vao, vbo, ibo;
+    Shader shader;
+    unsigned int vao, vbo, ibo, texture;
     int elementCount;
 };
 
-// Are multiple vertex buffers needed? Probably but I don't know for sure
 class VertexArrayCollection {
 public:
     void Init();
