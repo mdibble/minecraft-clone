@@ -80,6 +80,10 @@ void Shader::SetInt(const char* name, int val) {
     glUniform1i(glGetUniformLocation(id, name), 0);
 }
 
+void Shader::SetMat4(const char* name, glm::f32* ptr) {
+    glUniformMatrix4fv(glGetUniformLocation(id, name), 1, GL_FALSE, ptr);
+}
+
 bool Shader::DidCompilationSucceed(unsigned int shader) {
     int success;
     char infoLog[1024];

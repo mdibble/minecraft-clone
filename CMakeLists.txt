@@ -9,7 +9,7 @@ include_directories (PUBLIC vendor/glm/)
 
 add_library (glad vendor/glad/src/glad.c "src/render/vertex_array.cpp" "vendor/stb_image/stb_image.h" "vendor/stb_image/stb_image.cpp")
 add_subdirectory (vendor/glfw)
-add_subdirectory (vendor/glm)
+add_subdirectory (vendor/glm/glm)
 
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 

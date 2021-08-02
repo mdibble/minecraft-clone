@@ -9,6 +9,7 @@
 class VertexArray {
 public:
     VertexArray();
+    Shader shader;
     void Init(std::string vertPath, std::string fragPath, std::string texPath);
     void Bind();
     void Unbind();
@@ -16,7 +17,6 @@ public:
     void SendIndicies(unsigned int* data, int size);
     void Draw();
 private:
-    Shader shader;
     unsigned int vao, vbo, ibo, texture;
     int elementCount;
 };

@@ -7,6 +7,8 @@
 
 #include <glad/glad.h>
 
+#include <glm/glm.hpp>
+
 class Shader {
 public:
     Shader();
@@ -14,6 +16,7 @@ public:
     void Bind();
     void Unbind();
     void SetInt(const char* name, int val);
+    void SetMat4(const char* name, glm::f32* ptr);
 private:
     unsigned int id;
     bool DidCompilationSucceed(unsigned int shader);
