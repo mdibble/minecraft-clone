@@ -46,11 +46,11 @@ void VertexArray::Init(std::string vertPath, std::string fragPath, std::string t
     Unbind();
 }
 
-void VertexArray::SendVerticies(float data[], int size) {
+void VertexArray::SendVerticies(float* data, int size) {
     glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
 }
 
-void VertexArray::SendIndicies(unsigned int data[], int size) {
+void VertexArray::SendIndicies(unsigned int* data, int size) {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
     
     // Not sure how reliable this is 

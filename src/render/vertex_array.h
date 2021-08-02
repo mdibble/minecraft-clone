@@ -12,8 +12,8 @@ public:
     void Init(std::string vertPath, std::string fragPath, std::string texPath);
     void Bind();
     void Unbind();
-    void SendVerticies(float data[], int size);
-    void SendIndicies(unsigned int data[], int size);
+    void SendVerticies(float* data, int size);
+    void SendIndicies(unsigned int* data, int size);
     void Draw();
 private:
     Shader shader;

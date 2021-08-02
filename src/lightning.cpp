@@ -10,14 +10,14 @@ void Lightning::Init() {
 }
 
 void Lightning::Run() {
-    float verticies[] = {
+    std::vector<float> verticies = {
          0.5f,   0.5f,	 0.0f,       1.0f,   1.0f,
          0.5f,  -0.5f,	 0.0f,       1.0f,   0.0f,
         -0.5f,  -0.5f,	 0.0f,       0.0f,   0.0f,
         -0.5f,   0.5f,	 0.0f,       0.0f,   1.0f,
     };
 
-    unsigned int indicies[] = {
+    std::vector<unsigned int> indicies = {
         0, 1, 3,
         1, 2, 3,
     };
@@ -25,7 +25,7 @@ void Lightning::Run() {
     while (true) {
         renderer.BeginFrame();
         renderer.DrawSky();
-        renderer.DrawMesh(verticies, sizeof(verticies), indicies, sizeof(indicies));
+        renderer.DrawMesh(&verticies[0], verticies.size() * sizeof(float), &indicies[0], indicies.size() * sizeof(unsigned int));
         renderer.EndFrame();
     }
 }
