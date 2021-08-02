@@ -40,12 +40,18 @@ void Renderer::Init() {
 void Renderer::DrawMesh(float vert[], int vertCount, unsigned int ind[], int indCount) {
 	vertexArrays.basic.Bind();
 
-	glm::vec4 vec(1.0f, 0.0f, 0.0f, 1.0f);
-	glm::mat4 trans = glm::mat4(1.0f);
-	trans = glm::translate(trans, (float)sin(glfwGetTime()) * glm::vec3(0.5f, 0.0f, 0.0f));
-	trans = glm::translate(trans, (float)cos(glfwGetTime()) * glm::vec3(0.0f, 0.5f, 0.0f));
+	glm::mat4 model = glm::mat4(1.0f);
+	model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
-	vertexArrays.basic.shader.SetMat4("transform", glm::value_ptr(trans));
+	glm::mat4 view = glm::mat4(1.0f);
+	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -2.5f + cos(glfwGetTime())));
+
+	glm::mat4 proj = glm::mat4(1.0f);
+	proj = glm::perspective(glm::radians(45.0f), (float)viewportW / (float)viewportH, 0.1f, 100.0f);
+
+	vertexArrays.basic.shader.SetMat4("model", glm::value_ptr(model));
+	vertexArrays.basic.shader.SetMat4("view", glm::value_ptr(view));
+	vertexArrays.basic.shader.SetMat4("proj", glm::value_ptr(proj));
 
 	vertexArrays.basic.SendVerticies(vert, vertCount);
 	vertexArrays.basic.SendIndicies(ind, indCount);
@@ -85,6 +91,10 @@ void Renderer::BeginFrame() {
 void Renderer::EndFrame() {
 	glfwSwapBuffers(window);
 	glfwPollEvents();
+}
+
+bool Renderer::IsActive() {
+	return !glfwWindowShouldClose(window);
 }
 
 void Renderer::ViewportResizeCallback(int w, int h) {

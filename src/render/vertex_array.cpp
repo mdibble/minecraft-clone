@@ -35,6 +35,7 @@ void VertexArray::Init(std::string vertPath, std::string fragPath, std::string t
     unsigned char* data = stbi_load(texPath.c_str(), &texW, &texH, &texNrChannels, 0);
     if (data) {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texW, texH, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
     }
     else {
         std::cout << "Failed to load texture" << std::endl;

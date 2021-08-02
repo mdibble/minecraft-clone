@@ -22,7 +22,7 @@ void Lightning::Run() {
         1, 2, 3,
     };
 
-    while (true) {
+    while (renderer.IsActive()) {
         renderer.BeginFrame();
         renderer.DrawSky();
         renderer.DrawMesh(&verticies[0], verticies.size() * sizeof(float), &indicies[0], indicies.size() * sizeof(unsigned int));

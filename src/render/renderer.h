@@ -16,6 +16,7 @@ public:
     void Init();
     void EndFrame();
     void BeginFrame();
+    bool IsActive();
     void DrawMesh(float vert[], int vertCount, unsigned int ind[], int indCount);
     void DrawSky();
 private:
