@@ -33,6 +33,8 @@ void Renderer::Init() {
 	// VSync
 	// glfwSwapInterval(0);
 
+	glEnable(GL_DEPTH_TEST);
+
     std::cout << "Initializing renderer" << std::endl;
 	vertexArrays.Init();
 }
@@ -42,9 +44,12 @@ void Renderer::DrawMesh(float vert[], int vertCount, unsigned int ind[], int ind
 
 	glm::mat4 model = glm::mat4(1.0f);
 	model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	
+	float time = glfwGetTime();
+	model = glm::rotate(model, glm::radians(time) * 90.0f, glm::vec3(0.0f, 0.0f, 1.0f));
 
 	glm::mat4 view = glm::mat4(1.0f);
-	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -2.5f + cos(glfwGetTime())));
+	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
 
 	glm::mat4 proj = glm::mat4(1.0f);
 	proj = glm::perspective(glm::radians(45.0f), (float)viewportW / (float)viewportH, 0.1f, 100.0f);
@@ -85,7 +90,7 @@ void Renderer::DrawSky() {
 }
 
 void Renderer::BeginFrame() {
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void Renderer::EndFrame() {
