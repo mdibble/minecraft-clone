@@ -11,4 +11,6 @@ public:
 private:
     Renderer renderer;
     InputHandler inputHandler;
+    float dt;
+    float lastFrameTime;
 };

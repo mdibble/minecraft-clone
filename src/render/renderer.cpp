@@ -3,11 +3,12 @@
 Renderer::Renderer() {
 	window = nullptr;
 	inputHandler = nullptr;
+	dt = nullptr;
 	viewportW = 1920;
 	viewportH = 1080;
 }
 
-void Renderer::Init() {
+void Renderer::Init(InputHandler* inputHandlerPointer, float* dtPointer) {
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
@@ -28,20 +29,19 @@ void Renderer::Init() {
 
 	glfwMakeContextCurrent(window);
 
+	inputHandler = inputHandlerPointer;
+	dt = dtPointer;
+
 	gladLoadGL();
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 	
 	// VSync
-	// glfwSwapInterval(0);
+	glfwSwapInterval(0);
 
 	glEnable(GL_DEPTH_TEST);
 
     std::cout << "Initializing renderer" << std::endl;
 	vertexArrays.Init();
-}
-
-void Renderer::BindInputHandler(InputHandler* inputHandlerReference) {
-	inputHandler = inputHandlerReference;
 }
 
 void Renderer::DrawMesh(float vert[], int vertCount, unsigned int ind[], int indCount) {
@@ -93,16 +93,16 @@ void Renderer::BeginFrame() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	if (inputHandler->IsKeyPressed(GLFW_KEY_W)) {
-		camera.MovePos(glm::vec3(0.0f, 0.0f, -0.01f));
+		camera.MovePos(glm::vec3(0.0f, 0.0f, *dt * -1.0f));
 	}
 	if (inputHandler->IsKeyPressed(GLFW_KEY_S)) {
-		camera.MovePos(glm::vec3(0.0f, 0.0f, 0.01f));
+		camera.MovePos(glm::vec3(0.0f, 0.0f, *dt * 1.0f));
 	}
 	if (inputHandler->IsKeyPressed(GLFW_KEY_A)) {
-		camera.MovePos(glm::vec3(-0.01f, 0.0f, 0.0f));
+		camera.MovePos(glm::vec3(*dt * -1.0f, 0.0f, 0.0f));
 	}
 	if (inputHandler->IsKeyPressed(GLFW_KEY_D)) {
-		camera.MovePos(glm::vec3(0.01f, 0.0f, 0.0f));
+		camera.MovePos(glm::vec3(*dt * 1.0f, 0.0f, 0.0f));
 	}
 }
 
@@ -119,10 +119,10 @@ void Renderer::ViewportResizeCallback(int w, int h) {
 	viewportW = w;
 	viewportH = h;
 	glViewport(0, 0, viewportW, viewportH);
-	std::cout << "Resize callback" << std::endl;
+	// std::cout << "Resize callback" << std::endl;
 }
 
 void Renderer::KeyCallback(int key, int scancode, int action, int mods) {
-	std::cout << "Key callback" << std::endl;
+	// std::cout << "Key callback" << std::endl;
 	inputHandler->HandleInput(key, scancode, action, mods);
 }

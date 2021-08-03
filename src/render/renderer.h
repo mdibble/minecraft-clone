@@ -16,19 +16,19 @@
 class Renderer {
 public:
     Renderer();
-    void Init();
+    void Init(InputHandler* inputHandlerPointer, float* dtPointer);
     void EndFrame();
     void BeginFrame();
     bool IsActive();
     void DrawMesh(float vert[], int vertCount, unsigned int ind[], int indCount);
     void DrawSky();
-    void BindInputHandler(InputHandler* inputHandler);
 private:
     VertexArrayCollection vertexArrays;
     GLFWwindow* window;
     Camera camera;
     InputHandler* inputHandler;
     int viewportW, viewportH;
+    float* dt;
     void ViewportResizeCallback(int w, int h);
     void KeyCallback(int key, int scancode, int action, int mods);
 };
