@@ -6,6 +6,7 @@ Lightning::Lightning() {
 void Lightning::Init() {
     std::cout << "Initializing application" << std::endl;
     renderer.Init();
+    renderer.BindInputHandler(&inputHandler);
     std::cout << "App initialization complete" << std::endl;
 }
 

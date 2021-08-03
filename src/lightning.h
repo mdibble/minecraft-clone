@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "render/renderer.h"
+#include "input/input.h"
 
 class Lightning {
 public:
@@ -9,4 +10,5 @@ public:
     void Init();
 private:
     Renderer renderer;
+    InputHandler inputHandler;
 };

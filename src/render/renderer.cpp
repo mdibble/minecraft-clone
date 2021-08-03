@@ -2,6 +2,7 @@
 
 Renderer::Renderer() {
 	window = nullptr;
+	inputHandler = nullptr;
 	viewportW = 1920;
 	viewportH = 1080;
 }
@@ -39,17 +40,16 @@ void Renderer::Init() {
 	vertexArrays.Init();
 }
 
+void Renderer::BindInputHandler(InputHandler* inputHandlerReference) {
+	inputHandler = inputHandlerReference;
+}
+
 void Renderer::DrawMesh(float vert[], int vertCount, unsigned int ind[], int indCount) {
 	vertexArrays.basic.Bind();
 
 	glm::mat4 model = glm::mat4(1.0f);
-	model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-	
-	float time = glfwGetTime();
-	model = glm::rotate(model, glm::radians(time) * 90.0f, glm::vec3(0.0f, 0.0f, 1.0f));
 
-	glm::mat4 view = glm::mat4(1.0f);
-	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+	glm::mat4 view = camera.GenViewMat();
 
 	glm::mat4 proj = glm::mat4(1.0f);
 	proj = glm::perspective(glm::radians(45.0f), (float)viewportW / (float)viewportH, 0.1f, 100.0f);
@@ -91,6 +91,19 @@ void Renderer::DrawSky() {
 
 void Renderer::BeginFrame() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	if (inputHandler->IsKeyPressed(GLFW_KEY_W)) {
+		camera.MovePos(glm::vec3(0.0f, 0.0f, -0.01f));
+	}
+	if (inputHandler->IsKeyPressed(GLFW_KEY_S)) {
+		camera.MovePos(glm::vec3(0.0f, 0.0f, 0.01f));
+	}
+	if (inputHandler->IsKeyPressed(GLFW_KEY_A)) {
+		camera.MovePos(glm::vec3(-0.01f, 0.0f, 0.0f));
+	}
+	if (inputHandler->IsKeyPressed(GLFW_KEY_D)) {
+		camera.MovePos(glm::vec3(0.01f, 0.0f, 0.0f));
+	}
 }
 
 void Renderer::EndFrame() {
@@ -111,4 +124,5 @@ void Renderer::ViewportResizeCallback(int w, int h) {
 
 void Renderer::KeyCallback(int key, int scancode, int action, int mods) {
 	std::cout << "Key callback" << std::endl;
+	inputHandler->HandleInput(key, scancode, action, mods);
 }
