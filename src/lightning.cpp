@@ -45,7 +45,7 @@ void Lightning::Run() {
         lastFrameTime = currentTime;
 
         renderer.BeginFrame();
-        // renderer.DrawSky();
+        renderer.DrawSky();
         renderer.DrawMesh(&verticies[0], verticies.size() * sizeof(float), &indicies[0], indicies.size() * sizeof(unsigned int));
         renderer.EndFrame();
     }

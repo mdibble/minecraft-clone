@@ -54,6 +54,7 @@ void Renderer::DrawMesh(float vert[], int vertCount, unsigned int ind[], int ind
 	vertexArrays.basic.Bind();
 
 	glm::mat4 model = glm::mat4(1.0f);
+	model = glm::scale(model, glm::vec3(0.10f, 0.10f, 0.10f));
 
 	glm::mat4 view = camera.GenViewMat();
 
@@ -73,22 +74,50 @@ void Renderer::DrawMesh(float vert[], int vertCount, unsigned int ind[], int ind
 }
 
 void Renderer::DrawSky() {
-	static float vert[] = {
-		-1.0f,  -1.0f,	 0.0f,       0.0f,   0.0f,
-		-1.0f,   1.0f,	 0.0f,       0.0f,   1.0f,
-		 1.0f,   1.0f,	 0.0f,       1.0f,   1.0f,
-		 1.0f,  -1.0f,	 0.0f,       1.0f,   0.0f,
+	static std::vector<float> verticies = {
+		 0.5f,   0.5f,	 0.5f,       1.0f,   1.0f,
+		 0.5f,  -0.5f,	 0.5f,       1.0f,   0.0f,
+		-0.5f,  -0.5f,	 0.5f,       0.0f,   0.0f,
+		-0.5f,   0.5f,	 0.5f,       0.0f,   1.0f,
+
+		 0.5f,   0.5f,	-0.5f,       1.0f,   0.0f,
+		 0.5f,  -0.5f,	-0.5f,       0.0f,   1.0f,
+		-0.5f,  -0.5f,	-0.5f,       1.0f,   1.0f,
+		-0.5f,   0.5f,	-0.5f,       0.0f,   0.0f,
 	};
 
-	static unsigned int ind[] = {
-		0, 1, 2,
-		0, 2, 3,
+	static std::vector<unsigned int> indicies = {
+		0, 1, 3,
+		1, 2, 3,
+		4, 5, 7,
+		5, 6, 7,
+		0, 4, 5,
+		0, 1, 5,
+		4, 0, 3,
+		4, 7, 3,
+		3, 6, 7,
+		2, 3, 6,
+		1, 2, 6,
+		5, 6, 1
 	};
 
 	vertexArrays.sky.Bind();
 
-	vertexArrays.sky.SendVerticies(vert, sizeof(vert));
-	vertexArrays.sky.SendIndicies(ind, sizeof(ind));
+	glm::mat4 model = glm::mat4(1.0f);
+	model = glm::scale(model, glm::vec3(50.0f, 50.0f, 50.0f));
+	
+	glm::mat4 view = camera.GenViewMat();
+	view = glm::translate(view, camera.GetPos());
+
+	glm::mat4 proj = glm::mat4(1.0f);
+	proj = glm::perspective(glm::radians(45.0f), (float)viewportW / (float)viewportH, 0.1f, 100.0f);
+
+	vertexArrays.sky.shader.SetMat4("model", glm::value_ptr(model));
+	vertexArrays.sky.shader.SetMat4("view", glm::value_ptr(view));
+	vertexArrays.sky.shader.SetMat4("proj", glm::value_ptr(proj));
+
+	vertexArrays.sky.SendVerticies(&verticies[0], verticies.size() * sizeof(float));
+	vertexArrays.sky.SendIndicies(&indicies[0], indicies.size() * sizeof(unsigned int));
 
 	vertexArrays.sky.Draw();
 
@@ -98,7 +127,7 @@ void Renderer::DrawSky() {
 void Renderer::BeginFrame() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	float camSpeed = 2.0f * *dt;
+	float camSpeed = 0.5f * *dt;
 
 	if (inputHandler->IsKeyPressed(GLFW_KEY_W)) {
 		camera.MoveAlongFront(camSpeed);
