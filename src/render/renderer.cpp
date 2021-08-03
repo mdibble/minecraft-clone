@@ -16,6 +16,7 @@ void Renderer::Init(InputHandler* inputHandlerPointer, float* dtPointer) {
 
 	window = glfwCreateWindow(viewportW, viewportH, "Lightning", NULL, NULL);
 	glfwSetWindowUserPointer(window, this);
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	glfwSetFramebufferSizeCallback(window, [](GLFWwindow* window, int w, int h) {
 		Renderer* renderer = static_cast<Renderer*>(glfwGetWindowUserPointer(window));
@@ -27,6 +28,11 @@ void Renderer::Init(InputHandler* inputHandlerPointer, float* dtPointer) {
 		renderer->KeyCallback(key, scancode, action, mods);
 	});
 
+	glfwSetCursorPosCallback(window, [](GLFWwindow* window, double xpos, double ypos) {
+		Renderer* renderer = static_cast<Renderer*>(glfwGetWindowUserPointer(window));
+		renderer->MouseCallback(xpos, ypos);
+	});
+
 	glfwMakeContextCurrent(window);
 
 	inputHandler = inputHandlerPointer;
@@ -36,7 +42,7 @@ void Renderer::Init(InputHandler* inputHandlerPointer, float* dtPointer) {
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 	
 	// VSync
-	glfwSwapInterval(0);
+	// glfwSwapInterval(0);
 
 	glEnable(GL_DEPTH_TEST);
 
@@ -92,21 +98,24 @@ void Renderer::DrawSky() {
 void Renderer::BeginFrame() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	float camSpeed = 2.0f * *dt;
+
 	if (inputHandler->IsKeyPressed(GLFW_KEY_W)) {
-		camera.MovePos(glm::vec3(0.0f, 0.0f, *dt * -1.0f));
+		camera.MoveAlongFront(camSpeed);
 	}
 	if (inputHandler->IsKeyPressed(GLFW_KEY_S)) {
-		camera.MovePos(glm::vec3(0.0f, 0.0f, *dt * 1.0f));
+		camera.MoveAlongFront(-camSpeed);
 	}
 	if (inputHandler->IsKeyPressed(GLFW_KEY_A)) {
-		camera.MovePos(glm::vec3(*dt * -1.0f, 0.0f, 0.0f));
+		camera.MovePerpFromFront(-camSpeed);
 	}
 	if (inputHandler->IsKeyPressed(GLFW_KEY_D)) {
-		camera.MovePos(glm::vec3(*dt * 1.0f, 0.0f, 0.0f));
+		camera.MovePerpFromFront(camSpeed);
 	}
 }
 
 void Renderer::EndFrame() {
+	inputHandler->NeutralizeMouseOffset();
 	glfwSwapBuffers(window);
 	glfwPollEvents();
 }
@@ -124,5 +133,21 @@ void Renderer::ViewportResizeCallback(int w, int h) {
 
 void Renderer::KeyCallback(int key, int scancode, int action, int mods) {
 	// std::cout << "Key callback" << std::endl;
-	inputHandler->HandleInput(key, scancode, action, mods);
+	inputHandler->HandleKeyInput(key, scancode, action, mods);
+}
+
+void Renderer::MouseCallback(double xpos, double ypos) {
+	// std::cout << "Mouse callback " << xpos << " " << ypos << std::endl;
+	inputHandler->HandleMouseInput(xpos, ypos);
+
+	float xOffset = inputHandler->GetMouseOffsetX();
+	float yOffset = inputHandler->GetMouseOffsetY();
+	float camSpeed = 10.0f * *dt;
+
+	if (xOffset != 0.0f) {
+		camera.UpdateYaw(xOffset * camSpeed);
+	}
+	if (yOffset != 0.0f) {
+		camera.UpdatePitch(yOffset * -camSpeed);
+	}
 }

@@ -31,4 +31,5 @@ private:
     float* dt;
     void ViewportResizeCallback(int w, int h);
     void KeyCallback(int key, int scancode, int action, int mods);
+    void MouseCallback(double xpos, double ypos);
 };
