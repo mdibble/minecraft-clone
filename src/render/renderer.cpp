@@ -65,6 +65,10 @@ void Renderer::DrawMesh(float vert[], int vertCount, unsigned int ind[], int ind
 	vertexArrays.basic.shader.SetMat4("view", glm::value_ptr(view));
 	vertexArrays.basic.shader.SetMat4("proj", glm::value_ptr(proj));
 
+	glm::vec3 lightPos = glm::vec3(sin(glfwGetTime()) * 5.0f, 5.0f, cos(glfwGetTime()) * 5.0f);
+
+	vertexArrays.basic.shader.SetVec3("lightPos", glm::value_ptr(lightPos));
+
 	vertexArrays.basic.SendVerticies(vert, vertCount);
 	vertexArrays.basic.SendIndicies(ind, indCount);
 
@@ -75,30 +79,67 @@ void Renderer::DrawMesh(float vert[], int vertCount, unsigned int ind[], int ind
 
 void Renderer::DrawSky() {
 	static std::vector<float> verticies = {
-		 0.5f,   0.5f,	 0.5f,       1.0f,   1.0f,
-		 0.5f,  -0.5f,	 0.5f,       1.0f,   0.0f,
-		-0.5f,  -0.5f,	 0.5f,       0.0f,   0.0f,
-		-0.5f,   0.5f,	 0.5f,       0.0f,   1.0f,
+		// Bottom
+	    -0.5f,  -0.5f,	-0.5f,       1.0f,   1.0f,       0.0f,  -1.0f,   0.0f,
+	    -0.5f,  -0.5f,	 0.5f,       1.0f,   0.0f,       0.0f,  -1.0f,   0.0f,
+		 0.5f,  -0.5f,	 0.5f,       0.0f,   0.0f,       0.0f,  -1.0f,   0.0f,
+		 0.5f,  -0.5f,	-0.5f,       1.0f,   0.0f,       0.0f,  -1.0f,   0.0f,
 
-		 0.5f,   0.5f,	-0.5f,       1.0f,   0.0f,
-		 0.5f,  -0.5f,	-0.5f,       0.0f,   1.0f,
-		-0.5f,  -0.5f,	-0.5f,       1.0f,   1.0f,
-		-0.5f,   0.5f,	-0.5f,       0.0f,   0.0f,
+		// Top
+		-0.5f,   0.5f,	-0.5f,       1.0f,   1.0f,       0.0f,   1.0f,   0.0f,
+		-0.5f,   0.5f,	 0.5f,       1.0f,   0.0f,       0.0f,   1.0f,   0.0f,
+		 0.5f,   0.5f,	 0.5f,       0.0f,   0.0f,       0.0f,   1.0f,   0.0f,
+		 0.5f,   0.5f,	-0.5f,       1.0f,   0.0f,       0.0f,   1.0f,   0.0f,
+
+		// Left side
+		-0.5f,  -0.5f,	-0.5f,       1.0f,   1.0f,      -1.0f,   0.0f,   0.0f,
+		-0.5f,   0.5f,	-0.5f,       1.0f,   0.0f,      -1.0f,   0.0f,   0.0f,
+		-0.5f,   0.5f,	 0.5f,       0.0f,   0.0f,      -1.0f,   0.0f,   0.0f,
+		-0.5f,  -0.5f,	 0.5f,       1.0f,   0.0f,      -1.0f,   0.0f,   0.0f,
+
+	    // Right side
+		 0.5f,  -0.5f,	 0.5f,       1.0f,   1.0f,       1.0f,   0.0f,   0.0f,
+		 0.5f,   0.5f,	 0.5f,       1.0f,   0.0f,       1.0f,   0.0f,   0.0f,
+		 0.5f,   0.5f,	-0.5f,       0.0f,   0.0f,       1.0f,   0.0f,   0.0f,
+		 0.5f,  -0.5f,	-0.5f,       1.0f,   0.0f,       1.0f,   0.0f,   0.0f,
+
+		// Back side
+		 0.5f,  -0.5f,	-0.5f,       1.0f,   1.0f,       0.0f,   0.0f,  -1.0f,
+		 0.5f,   0.5f,	-0.5f,       1.0f,   0.0f,       0.0f,   0.0f,  -1.0f,
+		-0.5f,   0.5f,	-0.5f,       0.0f,   0.0f,       0.0f,   0.0f,  -1.0f,
+		-0.5f,  -0.5f,	-0.5f,       1.0f,   0.0f,       0.0f,   0.0f,  -1.0f,
+
+		// Front side
+		-0.5f,  -0.5f,	 0.5f,       1.0f,   1.0f,       0.0f,   0.0f,   1.0f,
+		-0.5f,   0.5f,	 0.5f,       1.0f,   0.0f,       0.0f,   0.0f,   1.0f,
+		 0.5f,   0.5f,	 0.5f,       0.0f,   0.0f,       0.0f,   0.0f,   1.0f,
+		 0.5f,  -0.5f,	 0.5f,       1.0f,   0.0f,       0.0f,   0.0f,   1.0f,
 	};
 
 	static std::vector<unsigned int> indicies = {
-		0, 1, 3,
-		1, 2, 3,
-		4, 5, 7,
-		5, 6, 7,
-		0, 4, 5,
-		0, 1, 5,
-		4, 0, 3,
-		4, 7, 3,
-		3, 6, 7,
-		2, 3, 6,
-		1, 2, 6,
-		5, 6, 1
+		// Bottom
+		0, 1, 2,
+		0, 2, 3,
+
+		// Top
+		4, 5, 6,
+		4, 6, 7,
+
+		// Left
+		8, 9, 10,
+		8, 10, 11,
+
+		// Right
+		12, 13, 14,
+		12, 14, 15,
+
+		// Back
+		16, 17, 18,
+		16, 18, 19,
+
+		// Front
+		20, 21, 22,
+		20, 22, 23,
 	};
 
 	vertexArrays.sky.Bind();

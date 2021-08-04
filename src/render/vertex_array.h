@@ -11,6 +11,7 @@ public:
     VertexArray();
     Shader shader;
     void Init(std::string vertPath, std::string fragPath, std::string texPath);
+    void Init(std::string vertPath, std::string fragPath);
     void Bind();
     void Unbind();
     void SendVerticies(float* data, int size);

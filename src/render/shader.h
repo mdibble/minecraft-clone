@@ -17,6 +17,7 @@ public:
     void Unbind();
     void SetInt(const char* name, int val);
     void SetMat4(const char* name, glm::f32* ptr);
+    void SetVec3(const char* name, glm::f32* ptr);
 private:
     unsigned int id;
     bool DidCompilationSucceed(unsigned int shader);

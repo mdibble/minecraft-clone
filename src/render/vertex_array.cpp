@@ -9,7 +9,7 @@ VertexArray::VertexArray() {
 }
 
 void VertexArray::Init(std::string vertPath, std::string fragPath, std::string texPath) {
-    std::cout << "Initializing vertex array" << std::endl;
+    std::cout << "Initializing vertex array [With texture]" << std::endl;
     
     shader.Init(vertPath, fragPath);
 
@@ -18,8 +18,9 @@ void VertexArray::Init(std::string vertPath, std::string fragPath, std::string t
     glGenBuffers(1, &ibo);
     Bind();
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(5 * sizeof(float)));
 
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
@@ -47,6 +48,21 @@ void VertexArray::Init(std::string vertPath, std::string fragPath, std::string t
     Unbind();
 }
 
+void VertexArray::Init(std::string vertPath, std::string fragPath) {
+    std::cout << "Initializing vertex array [No texture]" << std::endl;
+
+    shader.Init(vertPath, fragPath);
+
+    glGenVertexArrays(1, &vao);
+    glGenBuffers(1, &vbo);
+    glGenBuffers(1, &ibo);
+    Bind();
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+
+    Unbind();
+}
+
 void VertexArray::SendVerticies(float* data, int size) {
     glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
 }
@@ -69,6 +85,7 @@ void VertexArray::Bind() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
+    glEnableVertexAttribArray(2);
     glBindTexture(GL_TEXTURE_2D, texture);
 }
 
@@ -82,6 +99,6 @@ void VertexArray::Unbind() {
 
 void VertexArrayCollection::Init() {
     std::cout << "Initializing vertex array collection" << std::endl;
-    basic.Init("shader/basic.vert", "shader/basic.frag", "texture/test.jpg");
+    basic.Init("shader/basic.vert", "shader/basic.frag", "texture/basic.jpg");
     sky.Init("shader/sky.vert", "shader/sky.frag", "texture/sky.jpg");
 }
