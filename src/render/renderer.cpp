@@ -50,7 +50,7 @@ void Renderer::Init(InputHandler* inputHandlerPointer, float* dtPointer) {
 	vertexArrays.Init();
 }
 
-void Renderer::DrawMesh(float vert[], int vertCount, unsigned int ind[], int indCount) {
+void Renderer::DrawMesh() {
 	vertexArrays.basic.Bind();
 
 	glm::mat4 model = glm::mat4(1.0f);
@@ -69,79 +69,12 @@ void Renderer::DrawMesh(float vert[], int vertCount, unsigned int ind[], int ind
 
 	vertexArrays.basic.shader.SetVec3("lightPos", glm::value_ptr(lightPos));
 
-	vertexArrays.basic.SendVerticies(vert, vertCount);
-	vertexArrays.basic.SendIndicies(ind, indCount);
-
 	vertexArrays.basic.Draw();
 
 	vertexArrays.basic.Unbind();
 }
 
 void Renderer::DrawSky() {
-	static std::vector<float> verticies = {
-		// Bottom
-	    -0.5f,  -0.5f,	-0.5f,       1.0f,   1.0f,       0.0f,  -1.0f,   0.0f,
-	    -0.5f,  -0.5f,	 0.5f,       1.0f,   0.0f,       0.0f,  -1.0f,   0.0f,
-		 0.5f,  -0.5f,	 0.5f,       0.0f,   0.0f,       0.0f,  -1.0f,   0.0f,
-		 0.5f,  -0.5f,	-0.5f,       1.0f,   0.0f,       0.0f,  -1.0f,   0.0f,
-
-		// Top
-		-0.5f,   0.5f,	-0.5f,       1.0f,   1.0f,       0.0f,   1.0f,   0.0f,
-		-0.5f,   0.5f,	 0.5f,       1.0f,   0.0f,       0.0f,   1.0f,   0.0f,
-		 0.5f,   0.5f,	 0.5f,       0.0f,   0.0f,       0.0f,   1.0f,   0.0f,
-		 0.5f,   0.5f,	-0.5f,       1.0f,   0.0f,       0.0f,   1.0f,   0.0f,
-
-		// Left side
-		-0.5f,  -0.5f,	-0.5f,       1.0f,   1.0f,      -1.0f,   0.0f,   0.0f,
-		-0.5f,   0.5f,	-0.5f,       1.0f,   0.0f,      -1.0f,   0.0f,   0.0f,
-		-0.5f,   0.5f,	 0.5f,       0.0f,   0.0f,      -1.0f,   0.0f,   0.0f,
-		-0.5f,  -0.5f,	 0.5f,       1.0f,   0.0f,      -1.0f,   0.0f,   0.0f,
-
-	    // Right side
-		 0.5f,  -0.5f,	 0.5f,       1.0f,   1.0f,       1.0f,   0.0f,   0.0f,
-		 0.5f,   0.5f,	 0.5f,       1.0f,   0.0f,       1.0f,   0.0f,   0.0f,
-		 0.5f,   0.5f,	-0.5f,       0.0f,   0.0f,       1.0f,   0.0f,   0.0f,
-		 0.5f,  -0.5f,	-0.5f,       1.0f,   0.0f,       1.0f,   0.0f,   0.0f,
-
-		// Back side
-		 0.5f,  -0.5f,	-0.5f,       1.0f,   1.0f,       0.0f,   0.0f,  -1.0f,
-		 0.5f,   0.5f,	-0.5f,       1.0f,   0.0f,       0.0f,   0.0f,  -1.0f,
-		-0.5f,   0.5f,	-0.5f,       0.0f,   0.0f,       0.0f,   0.0f,  -1.0f,
-		-0.5f,  -0.5f,	-0.5f,       1.0f,   0.0f,       0.0f,   0.0f,  -1.0f,
-
-		// Front side
-		-0.5f,  -0.5f,	 0.5f,       1.0f,   1.0f,       0.0f,   0.0f,   1.0f,
-		-0.5f,   0.5f,	 0.5f,       1.0f,   0.0f,       0.0f,   0.0f,   1.0f,
-		 0.5f,   0.5f,	 0.5f,       0.0f,   0.0f,       0.0f,   0.0f,   1.0f,
-		 0.5f,  -0.5f,	 0.5f,       1.0f,   0.0f,       0.0f,   0.0f,   1.0f,
-	};
-
-	static std::vector<unsigned int> indicies = {
-		// Bottom
-		0, 1, 2,
-		0, 2, 3,
-
-		// Top
-		4, 5, 6,
-		4, 6, 7,
-
-		// Left
-		8, 9, 10,
-		8, 10, 11,
-
-		// Right
-		12, 13, 14,
-		12, 14, 15,
-
-		// Back
-		16, 17, 18,
-		16, 18, 19,
-
-		// Front
-		20, 21, 22,
-		20, 22, 23,
-	};
-
 	vertexArrays.sky.Bind();
 
 	glm::mat4 model = glm::mat4(1.0f);
@@ -156,9 +89,6 @@ void Renderer::DrawSky() {
 	vertexArrays.sky.shader.SetMat4("model", glm::value_ptr(model));
 	vertexArrays.sky.shader.SetMat4("view", glm::value_ptr(view));
 	vertexArrays.sky.shader.SetMat4("proj", glm::value_ptr(proj));
-
-	vertexArrays.sky.SendVerticies(&verticies[0], verticies.size() * sizeof(float));
-	vertexArrays.sky.SendIndicies(&indicies[0], indicies.size() * sizeof(unsigned int));
 
 	vertexArrays.sky.Draw();
 
@@ -212,7 +142,7 @@ void Renderer::MouseCallback(double xpos, double ypos) {
 
 	float xOffset = inputHandler->GetMouseOffsetX();
 	float yOffset = inputHandler->GetMouseOffsetY();
-	float camSpeed = 10.0f * *dt;
+	float camSpeed = 0.05f;
 
 	if (xOffset != 0.0f) {
 		camera.UpdateYaw(xOffset * camSpeed);

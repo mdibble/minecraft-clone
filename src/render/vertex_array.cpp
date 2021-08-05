@@ -99,6 +99,80 @@ void VertexArray::Unbind() {
 
 void VertexArrayCollection::Init() {
     std::cout << "Initializing vertex array collection" << std::endl;
-    basic.Init("shader/basic.vert", "shader/basic.frag", "texture/basic.jpg");
+
+    static std::vector<float> verticies = {
+        // Bottom
+        -0.5f,  -0.5f,	-0.5f,       1.0f,   1.0f,       0.0f,  -1.0f,   0.0f,
+        -0.5f,  -0.5f,	 0.5f,       1.0f,   0.0f,       0.0f,  -1.0f,   0.0f,
+         0.5f,  -0.5f,	 0.5f,       0.0f,   0.0f,       0.0f,  -1.0f,   0.0f,
+         0.5f,  -0.5f,	-0.5f,       1.0f,   0.0f,       0.0f,  -1.0f,   0.0f,
+
+         // Top
+         -0.5f,   0.5f,	-0.5f,       1.0f,   1.0f,       0.0f,   1.0f,   0.0f,
+         -0.5f,   0.5f,	 0.5f,       1.0f,   0.0f,       0.0f,   1.0f,   0.0f,
+          0.5f,   0.5f,	 0.5f,       0.0f,   0.0f,       0.0f,   1.0f,   0.0f,
+          0.5f,   0.5f,	-0.5f,       1.0f,   0.0f,       0.0f,   1.0f,   0.0f,
+
+          // Left side
+          -0.5f,  -0.5f,	-0.5f,       1.0f,   1.0f,      -1.0f,   0.0f,   0.0f,
+          -0.5f,   0.5f,	-0.5f,       1.0f,   0.0f,      -1.0f,   0.0f,   0.0f,
+          -0.5f,   0.5f,	 0.5f,       0.0f,   0.0f,      -1.0f,   0.0f,   0.0f,
+          -0.5f,  -0.5f,	 0.5f,       1.0f,   0.0f,      -1.0f,   0.0f,   0.0f,
+
+          // Right side
+           0.5f,  -0.5f,	 0.5f,       1.0f,   1.0f,       1.0f,   0.0f,   0.0f,
+           0.5f,   0.5f,	 0.5f,       1.0f,   0.0f,       1.0f,   0.0f,   0.0f,
+           0.5f,   0.5f,	-0.5f,       0.0f,   0.0f,       1.0f,   0.0f,   0.0f,
+           0.5f,  -0.5f,	-0.5f,       1.0f,   0.0f,       1.0f,   0.0f,   0.0f,
+
+           // Back side
+            0.5f,  -0.5f,	-0.5f,       1.0f,   1.0f,       0.0f,   0.0f,  -1.0f,
+            0.5f,   0.5f,	-0.5f,       1.0f,   0.0f,       0.0f,   0.0f,  -1.0f,
+           -0.5f,   0.5f,	-0.5f,       0.0f,   0.0f,       0.0f,   0.0f,  -1.0f,
+           -0.5f,  -0.5f,	-0.5f,       1.0f,   0.0f,       0.0f,   0.0f,  -1.0f,
+
+           // Front side
+           -0.5f,  -0.5f,	 0.5f,       1.0f,   1.0f,       0.0f,   0.0f,   1.0f,
+           -0.5f,   0.5f,	 0.5f,       1.0f,   0.0f,       0.0f,   0.0f,   1.0f,
+            0.5f,   0.5f,	 0.5f,       0.0f,   0.0f,       0.0f,   0.0f,   1.0f,
+            0.5f,  -0.5f,	 0.5f,       1.0f,   0.0f,       0.0f,   0.0f,   1.0f,
+    };
+
+    static std::vector<unsigned int> indicies = {
+        // Bottom
+        0, 1, 2,
+        0, 2, 3,
+
+        // Top
+        4, 5, 6,
+        4, 6, 7,
+
+        // Left
+        8, 9, 10,
+        8, 10, 11,
+
+        // Right
+        12, 13, 14,
+        12, 14, 15,
+
+        // Back
+        16, 17, 18,
+        16, 18, 19,
+
+        // Front
+        20, 21, 22,
+        20, 22, 23,
+    };
+
+    basic.Init("shader/basic.vert", "shader/basic.frag", "texture/test.jpg");
+    basic.Bind();
+    basic.SendVerticies(&verticies[0], verticies.size() * sizeof(float));
+    basic.SendIndicies(&indicies[0], indicies.size() * sizeof(unsigned int));
+    basic.Unbind();
+
     sky.Init("shader/sky.vert", "shader/sky.frag", "texture/sky.jpg");
+    sky.Bind();
+    sky.SendVerticies(&verticies[0], verticies.size() * sizeof(float));
+    sky.SendIndicies(&indicies[0], indicies.size() * sizeof(unsigned int));
+    sky.Unbind();
 }

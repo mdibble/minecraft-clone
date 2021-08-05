@@ -20,7 +20,7 @@ public:
     void EndFrame();
     void BeginFrame();
     bool IsActive();
-    void DrawMesh(float vert[], int vertCount, unsigned int ind[], int indCount);
+    void DrawMesh();
     void DrawSky();
 private:
     VertexArrayCollection vertexArrays;
