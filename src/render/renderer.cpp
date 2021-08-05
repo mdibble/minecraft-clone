@@ -54,7 +54,7 @@ void Renderer::DrawMesh(float vert[], int vertCount, unsigned int ind[], int ind
 	vertexArrays.basic.Bind();
 
 	glm::mat4 model = glm::mat4(1.0f);
-	model = glm::scale(model, glm::vec3(0.10f, 0.10f, 0.10f));
+	model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
 
 	glm::mat4 view = camera.GenViewMat();
 
@@ -65,7 +65,7 @@ void Renderer::DrawMesh(float vert[], int vertCount, unsigned int ind[], int ind
 	vertexArrays.basic.shader.SetMat4("view", glm::value_ptr(view));
 	vertexArrays.basic.shader.SetMat4("proj", glm::value_ptr(proj));
 
-	glm::vec3 lightPos = glm::vec3(sin(glfwGetTime()) * 5.0f, 5.0f, cos(glfwGetTime()) * 5.0f);
+	glm::vec3 lightPos = glm::vec3(sin(glfwGetTime()) * 1.0f, 1.0f, cos(glfwGetTime()) * 1.0f);
 
 	vertexArrays.basic.shader.SetVec3("lightPos", glm::value_ptr(lightPos));
 
