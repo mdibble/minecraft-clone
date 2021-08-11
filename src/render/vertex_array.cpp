@@ -10,7 +10,6 @@ VertexArray::VertexArray() {
 
 void VertexArray::Init(std::string vertPath, std::string fragPath, std::string texPath) {
     std::cout << "Initializing vertex array [With texture]" << std::endl;
-    
     shader.Init(vertPath, fragPath);
 
     glGenVertexArrays(1, &vao);

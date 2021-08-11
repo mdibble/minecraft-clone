@@ -4,11 +4,12 @@ Renderer::Renderer() {
 	window = nullptr;
 	inputHandler = nullptr;
 	dt = nullptr;
+	lastFrameTime = nullptr;
 	viewportW = 1920;
 	viewportH = 1080;
 }
 
-void Renderer::Init(InputHandler* inputHandlerPointer, float* dtPointer) {
+void Renderer::Init(InputHandler* inputHandlerPointer, float* dtPointer, float* lastFrameTimePointer) {
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
@@ -37,6 +38,7 @@ void Renderer::Init(InputHandler* inputHandlerPointer, float* dtPointer) {
 
 	inputHandler = inputHandlerPointer;
 	dt = dtPointer;
+	lastFrameTime = lastFrameTimePointer;
 
 	gladLoadGL();
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
@@ -50,11 +52,12 @@ void Renderer::Init(InputHandler* inputHandlerPointer, float* dtPointer) {
 	vertexArrays.Init();
 }
 
-void Renderer::DrawMesh() {
+void Renderer::DrawMesh(float x, float y, float z) {
 	vertexArrays.basic.Bind();
 
 	glm::mat4 model = glm::mat4(1.0f);
-	model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+	model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+	model = glm::translate(model, glm::vec3(x, y, z));
 
 	glm::mat4 view = camera.GenViewMat();
 
@@ -65,7 +68,7 @@ void Renderer::DrawMesh() {
 	vertexArrays.basic.shader.SetMat4("view", glm::value_ptr(view));
 	vertexArrays.basic.shader.SetMat4("proj", glm::value_ptr(proj));
 
-	glm::vec3 lightPos = glm::vec3(sin(glfwGetTime()) * 1.0f, 1.0f, cos(glfwGetTime()) * 1.0f);
+	glm::vec3 lightPos = glm::vec3(sin(*lastFrameTime) * 1.0f, 1.0f, cos(*lastFrameTime) * 1.0f);
 
 	vertexArrays.basic.shader.SetVec3("lightPos", glm::value_ptr(lightPos));
 

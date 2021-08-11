@@ -16,11 +16,11 @@
 class Renderer {
 public:
     Renderer();
-    void Init(InputHandler* inputHandlerPointer, float* dtPointer);
+    void Init(InputHandler* inputHandlerPointer, float* dtPointer, float* lastFrameTime);
     void EndFrame();
     void BeginFrame();
     bool IsActive();
-    void DrawMesh();
+    void DrawMesh(float x, float y, float z);
     void DrawSky();
 private:
     VertexArrayCollection vertexArrays;
@@ -29,6 +29,7 @@ private:
     InputHandler* inputHandler;
     int viewportW, viewportH;
     float* dt;
+    float* lastFrameTime;
     void ViewportResizeCallback(int w, int h);
     void KeyCallback(int key, int scancode, int action, int mods);
     void MouseCallback(double xpos, double ypos);
