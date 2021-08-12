@@ -21,9 +21,10 @@ public:
     void BeginFrame();
     bool IsActive();
     void DrawMesh(float x, float y, float z);
+    void PrepareMesh();
     void DrawSky();
-private:
     VertexArrayCollection vertexArrays;
+private:
     GLFWwindow* window;
     Camera camera;
     InputHandler* inputHandler;

@@ -52,29 +52,30 @@ void Renderer::Init(InputHandler* inputHandlerPointer, float* dtPointer, float* 
 	vertexArrays.Init();
 }
 
-void Renderer::DrawMesh(float x, float y, float z) {
+void Renderer::PrepareMesh() {
 	vertexArrays.basic.Bind();
-
-	glm::mat4 model = glm::mat4(1.0f);
-	model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
-	model = glm::translate(model, glm::vec3(x, y, z));
 
 	glm::mat4 view = camera.GenViewMat();
 
 	glm::mat4 proj = glm::mat4(1.0f);
 	proj = glm::perspective(glm::radians(45.0f), (float)viewportW / (float)viewportH, 0.1f, 100.0f);
 
-	vertexArrays.basic.shader.SetMat4("model", glm::value_ptr(model));
 	vertexArrays.basic.shader.SetMat4("view", glm::value_ptr(view));
 	vertexArrays.basic.shader.SetMat4("proj", glm::value_ptr(proj));
 
 	glm::vec3 lightPos = glm::vec3(sin(*lastFrameTime) * 1.0f, 1.0f, cos(*lastFrameTime) * 1.0f);
 
 	vertexArrays.basic.shader.SetVec3("lightPos", glm::value_ptr(lightPos));
+}
+
+void Renderer::DrawMesh(float x, float y, float z) {
+	glm::mat4 model = glm::mat4(1.0f);
+	model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+	model = glm::translate(model, glm::vec3(x, y, z));
+
+	vertexArrays.basic.shader.SetMat4("model", glm::value_ptr(model));
 
 	vertexArrays.basic.Draw();
-
-	vertexArrays.basic.Unbind();
 }
 
 void Renderer::DrawSky() {
@@ -94,8 +95,6 @@ void Renderer::DrawSky() {
 	vertexArrays.sky.shader.SetMat4("proj", glm::value_ptr(proj));
 
 	vertexArrays.sky.Draw();
-
-	vertexArrays.sky.Unbind();
 }
 
 void Renderer::BeginFrame() {
