@@ -66,6 +66,10 @@ void Shader::Init(std::string vertPath, std::string fragPath) {
 
     glDeleteShader(vert);
     glDeleteShader(frag);
+
+    Bind();
+    SetInt("textureData", 0);
+    Unbind();
 }
 
 void Shader::Bind() {

@@ -8,7 +8,8 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "shader.h"
-#include "vertex_array.h"
+#include "vertex_buffer.h"
+#include "texture.h"
 #include "camera.h"
 
 #include "../input/input.h"
@@ -23,11 +24,13 @@ public:
     void DrawMesh(float x, float y, float z);
     void PrepareMesh();
     void DrawSky();
-    VertexArrayCollection vertexArrays;
 private:
     GLFWwindow* window;
-    Camera camera;
     InputHandler* inputHandler;
+    Camera camera;
+    Texture basicTexture, skyTexture;
+    Shader basicShader, skyShader;
+    VertexBuffer basicVertexArray, skyVertexArray;
     int viewportW, viewportH;
     float* dt;
     float* lastFrameTime;
