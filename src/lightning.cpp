@@ -8,6 +8,9 @@ Lightning::Lightning() {
 void Lightning::Init() {
     std::cout << "Initializing application" << std::endl;
     renderer.Init(&inputHandler, &dt, &lastFrameTime);
+
+    chunkTest.Init();
+
     std::cout << "App initialization complete" << std::endl;
 }
 
@@ -24,9 +27,11 @@ void Lightning::Run() {
         renderer.PrepareMesh();
         for (float i = -20.0f; i < 20.0f; i += 1.0f) {
             for (int j = -20.0f; j < 20.0f; j += 1.0f) {
-                renderer.DrawMesh(i, 0.0f, j);
+                // renderer.DrawMesh(i, 0.0f, j);
             }
         }
+
+        renderer.DrawChunk(&chunkTest);
 
         renderer.EndFrame();
     }

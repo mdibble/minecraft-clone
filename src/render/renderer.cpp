@@ -161,6 +161,19 @@ void Renderer::DrawMesh(float x, float y, float z) {
 	basicVertexArray.Draw();
 }
 
+void Renderer::DrawChunk(Chunk* chunk) {
+	VertexBuffer* buffer = chunk->GetChunkBuffer();
+
+	glm::mat4 model = glm::mat4(1.0f);
+	model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+	model = glm::translate(model, glm::vec3(0.0, 0.0, 0.0));
+
+	basicShader.SetMat4("model", glm::value_ptr(model));
+
+	buffer->Bind();
+	buffer->Draw();
+}
+
 void Renderer::DrawSky() {
 	skyVertexArray.Bind();
 	skyTexture.Bind();

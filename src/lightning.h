@@ -11,6 +11,7 @@ public:
 private:
     Renderer renderer;
     InputHandler inputHandler;
+    Chunk chunkTest;
     float dt;
     float lastFrameTime;
 };

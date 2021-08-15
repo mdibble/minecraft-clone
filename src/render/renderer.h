@@ -13,6 +13,7 @@
 #include "camera.h"
 
 #include "../input/input.h"
+#include "../game/chunk.h"
 
 class Renderer {
 public:
@@ -22,6 +23,7 @@ public:
     void BeginFrame();
     bool IsActive();
     void DrawMesh(float x, float y, float z);
+    void DrawChunk(Chunk* chunk);
     void PrepareMesh();
     void DrawSky();
 private:
