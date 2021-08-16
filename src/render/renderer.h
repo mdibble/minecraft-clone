@@ -23,7 +23,7 @@ public:
     void BeginFrame();
     bool IsActive();
     void DrawMesh(float x, float y, float z);
-    void DrawChunk(Chunk* chunk);
+    void DrawChunk(Chunk* chunk, float x, float z);
     void PrepareMesh();
     void DrawSky();
 private:

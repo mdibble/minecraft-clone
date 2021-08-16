@@ -25,13 +25,12 @@ void Lightning::Run() {
         renderer.DrawSky();
 
         renderer.PrepareMesh();
-        for (float i = -20.0f; i < 20.0f; i += 1.0f) {
-            for (int j = -20.0f; j < 20.0f; j += 1.0f) {
-                // renderer.DrawMesh(i, 0.0f, j);
+
+        for (int i = 0; i < 16 * 16; i += 16) {
+            for (int j = 0; j < 16 * 16; j += 16) {
+                renderer.DrawChunk(&chunkTest, i, j);
             }
         }
-
-        renderer.DrawChunk(&chunkTest);
 
         renderer.EndFrame();
     }

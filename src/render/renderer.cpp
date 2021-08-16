@@ -126,7 +126,7 @@ void Renderer::Init(InputHandler* inputHandlerPointer, float* dtPointer, float* 
 	skyVertexArray.SendIndicies(&indicies[0], indicies.size() * sizeof(unsigned int));
 	skyVertexArray.Unbind();
 
-	basicTexture.Init("texture/test.jpg");
+	basicTexture.Init("texture/basic.jpg");
 	skyTexture.Init("texture/sky.jpg");
 
 	basicShader.Init("shader/basic.vert", "shader/basic.frag");
@@ -161,12 +161,12 @@ void Renderer::DrawMesh(float x, float y, float z) {
 	basicVertexArray.Draw();
 }
 
-void Renderer::DrawChunk(Chunk* chunk) {
+void Renderer::DrawChunk(Chunk* chunk, float x, float z) {
 	VertexBuffer* buffer = chunk->GetChunkBuffer();
 
 	glm::mat4 model = glm::mat4(1.0f);
 	model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
-	model = glm::translate(model, glm::vec3(0.0, 0.0, 0.0));
+	model = glm::translate(model, glm::vec3(x, 0.0, z));
 
 	basicShader.SetMat4("model", glm::value_ptr(model));
 
