@@ -18,84 +18,26 @@ Chunk::Chunk() {
     }
 
     needsUpdate = true;
+	isReady = false;
+	xCoord = 0;
+	zCoord = 0;
 }
 
-void Chunk::Init() {
+void Chunk::Init(int chunkX, int chunkZ) {
+	xCoord = chunkX;
+	zCoord = chunkZ;
     buffer.Init();
     UpdateMesh();
+	isReady = true;
+}
+
+bool Chunk::IsChunkReady() {
+	return isReady;
 }
 
 void Chunk::UpdateMesh() {
 	std::vector<float> verticies = { };
 	std::vector<unsigned int> indicies = { };
-
-	/*
-
-	verticies = {
-		// Bottom
-		-0.5f,  -0.5f,	-0.5f,       1.0f,   1.0f,       0.0f,  -1.0f,   0.0f,
-		-0.5f,  -0.5f,	 0.5f,       1.0f,   0.0f,       0.0f,  -1.0f,   0.0f,
-		 0.5f,  -0.5f,	 0.5f,       0.0f,   0.0f,       0.0f,  -1.0f,   0.0f,
-		 0.5f,  -0.5f,	-0.5f,       1.0f,   0.0f,       0.0f,  -1.0f,   0.0f,
-
-		 // Top
-		 -0.5f,   0.5f,	-0.5f,       1.0f,   1.0f,       0.0f,   1.0f,   0.0f,
-		 -0.5f,   0.5f,	 0.5f,       1.0f,   0.0f,       0.0f,   1.0f,   0.0f,
-		  0.5f,   0.5f,	 0.5f,       0.0f,   0.0f,       0.0f,   1.0f,   0.0f,
-		  0.5f,   0.5f,	-0.5f,       1.0f,   0.0f,       0.0f,   1.0f,   0.0f,
-
-		  // Left side
-		  -0.5f,  -0.5f,	-0.5f,       1.0f,   1.0f,      -1.0f,   0.0f,   0.0f,
-		  -0.5f,   0.5f,	-0.5f,       1.0f,   0.0f,      -1.0f,   0.0f,   0.0f,
-		  -0.5f,   0.5f,	 0.5f,       0.0f,   0.0f,      -1.0f,   0.0f,   0.0f,
-		  -0.5f,  -0.5f,	 0.5f,       1.0f,   0.0f,      -1.0f,   0.0f,   0.0f,
-
-		  // Right side
-		   0.5f,  -0.5f,	 0.5f,       1.0f,   1.0f,       1.0f,   0.0f,   0.0f,
-		   0.5f,   0.5f,	 0.5f,       1.0f,   0.0f,       1.0f,   0.0f,   0.0f,
-		   0.5f,   0.5f,	-0.5f,       0.0f,   0.0f,       1.0f,   0.0f,   0.0f,
-		   0.5f,  -0.5f,	-0.5f,       1.0f,   0.0f,       1.0f,   0.0f,   0.0f,
-
-		   // Back side
-			0.5f,  -0.5f,	-0.5f,       1.0f,   1.0f,       0.0f,   0.0f,  -1.0f,
-			0.5f,   0.5f,	-0.5f,       1.0f,   0.0f,       0.0f,   0.0f,  -1.0f,
-		   -0.5f,   0.5f,	-0.5f,       0.0f,   0.0f,       0.0f,   0.0f,  -1.0f,
-		   -0.5f,  -0.5f,	-0.5f,       1.0f,   0.0f,       0.0f,   0.0f,  -1.0f,
-
-		   // Front side
-		   -0.5f,  -0.5f,	 0.5f,       1.0f,   1.0f,       0.0f,   0.0f,   1.0f,
-		   -0.5f,   0.5f,	 0.5f,       1.0f,   0.0f,       0.0f,   0.0f,   1.0f,
-			0.5f,   0.5f,	 0.5f,       0.0f,   0.0f,       0.0f,   0.0f,   1.0f,
-			0.5f,  -0.5f,	 0.5f,       1.0f,   0.0f,       0.0f,   0.0f,   1.0f,
-	};
-
-	indicies = {
-		// Bottom
-		0, 1, 2,
-		0, 2, 3,
-
-		// Top
-		4, 5, 6,
-		4, 6, 7,
-
-		// Left
-		8, 9, 10,
-		8, 10, 11,
-
-		// Right
-		12, 13, 14,
-		12, 14, 15,
-
-		// Back
-		16, 17, 18,
-		16, 18, 19,
-
-		// Front
-		20, 21, 22,
-		20, 22, 23,
-	};
-
-	*/
 
 	std::vector<float> normal = { };
 	unsigned int indexCounter = 0;
@@ -440,12 +382,21 @@ void Chunk::UpdateMesh() {
     buffer.SendVerticies(&verticies[0], verticies.size() * sizeof(float));
     buffer.SendIndicies(&indicies[0], indicies.size() * sizeof(unsigned int));
     buffer.Unbind();
+	isReady = true;
 }
 
 void Chunk::AnalyzeChunk() {
     if (needsUpdate) {
         UpdateMesh();
     }
+}
+
+int Chunk::GetXCoord() {
+	return xCoord;
+}
+
+int Chunk::GetZCoord() {
+	return zCoord;
 }
 
 VertexBuffer* Chunk::GetChunkBuffer() {

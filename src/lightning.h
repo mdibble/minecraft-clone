@@ -2,6 +2,7 @@
 
 #include "render/renderer.h"
 #include "input/input.h"
+#include "game/game.h"
 
 class Lightning {
 public:
@@ -11,6 +12,7 @@ public:
 private:
     Renderer renderer;
     InputHandler inputHandler;
+    Game game;
     Chunk chunkTest;
     float dt;
     float lastFrameTime;

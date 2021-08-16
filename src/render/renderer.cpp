@@ -161,12 +161,16 @@ void Renderer::DrawMesh(float x, float y, float z) {
 	basicVertexArray.Draw();
 }
 
-void Renderer::DrawChunk(Chunk* chunk, float x, float z) {
+void Renderer::DrawChunk(Chunk* chunk) {
+	if (chunk->IsChunkReady() == false) {
+		return;
+	}
+
 	VertexBuffer* buffer = chunk->GetChunkBuffer();
 
 	glm::mat4 model = glm::mat4(1.0f);
 	model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
-	model = glm::translate(model, glm::vec3(x, 0.0, z));
+	model = glm::translate(model, glm::vec3(chunk->GetXCoord() * 16, 0.0, chunk->GetZCoord() * 16));
 
 	basicShader.SetMat4("model", glm::value_ptr(model));
 

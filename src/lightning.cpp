@@ -8,8 +8,9 @@ Lightning::Lightning() {
 void Lightning::Init() {
     std::cout << "Initializing application" << std::endl;
     renderer.Init(&inputHandler, &dt, &lastFrameTime);
+    game.Init();
 
-    chunkTest.Init();
+    chunkTest.Init(0, 0);
 
     std::cout << "App initialization complete" << std::endl;
 }
@@ -26,9 +27,9 @@ void Lightning::Run() {
 
         renderer.PrepareMesh();
 
-        for (int i = 0; i < 16 * 16; i += 16) {
-            for (int j = 0; j < 16 * 16; j += 16) {
-                renderer.DrawChunk(&chunkTest, i, j);
+        for (int i = 0; i < 16; i += 1) {
+            for (int j = 0; j < 16; j += 1) {
+                renderer.DrawChunk(game.world.GetChunk(i, j));
             }
         }
 

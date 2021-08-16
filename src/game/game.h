@@ -1,5 +1,12 @@
 #pragma once
 
-class Game {
+#include "world.h"
+#include <iostream>
 
+class Game {
+public:
+    Game();
+    void Init();
+    World world;
+private:
 };
