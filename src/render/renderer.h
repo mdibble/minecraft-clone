@@ -22,7 +22,6 @@ public:
     void EndFrame();
     void BeginFrame();
     bool IsActive();
-    void DrawMesh(float x, float y, float z);
     void DrawChunk(Chunk* chunk);
     void PrepareMesh();
     void DrawSky();
@@ -32,7 +31,7 @@ private:
     Camera camera;
     Texture basicTexture, skyTexture;
     Shader basicShader, skyShader;
-    VertexBuffer basicVertexArray, skyVertexArray;
+    VertexBuffer skyVertexArray;
     int viewportW, viewportH;
     float* dt;
     float* lastFrameTime;

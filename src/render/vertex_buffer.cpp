@@ -22,6 +22,16 @@ void VertexBuffer::Init() {
     Unbind();
 }
 
+void VertexBuffer::Delete() {
+    std::cout << "Deleting vertex buffer" << std::endl;
+
+    Bind();
+    glDeleteVertexArrays(1, &vao);
+    glDeleteBuffers(1, &vbo);
+    glDeleteBuffers(1, &ibo);
+    Unbind();
+}
+
 void VertexBuffer::SendVerticies(float* data, int size) {
     glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
 }

@@ -11,6 +11,7 @@ class VertexBuffer {
 public:
     VertexBuffer();
     void Init();
+    void Delete();
     void Bind();
     void Unbind();
     void SendVerticies(float* data, int size);

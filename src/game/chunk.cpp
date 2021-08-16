@@ -18,7 +18,7 @@ Chunk::Chunk() {
     }
 
     needsUpdate = true;
-	isReady = false;
+	isLoaded = false;
 	xCoord = 0;
 	zCoord = 0;
 }
@@ -26,13 +26,6 @@ Chunk::Chunk() {
 void Chunk::Init(int chunkX, int chunkZ) {
 	xCoord = chunkX;
 	zCoord = chunkZ;
-    buffer.Init();
-    UpdateMesh();
-	isReady = true;
-}
-
-bool Chunk::IsChunkReady() {
-	return isReady;
 }
 
 void Chunk::UpdateMesh() {
@@ -45,6 +38,7 @@ void Chunk::UpdateMesh() {
 	// Top side
 
 	normal = { 0.0f, 1.0f, 0.0f };
+
 	for (int x = 0; x < 16; x += 1) {
 		for (int y = 0; y < 16; y += 1) {
 			for (int z = 0; z < 16; z += 1) {
@@ -382,7 +376,31 @@ void Chunk::UpdateMesh() {
     buffer.SendVerticies(&verticies[0], verticies.size() * sizeof(float));
     buffer.SendIndicies(&indicies[0], indicies.size() * sizeof(unsigned int));
     buffer.Unbind();
-	isReady = true;
+}
+
+bool Chunk::IsLoaded() {
+	return isLoaded;
+}
+
+void Chunk::LoadChunk() {
+	if (isLoaded) {
+		return;
+	}
+
+	isLoaded = true;
+	buffer.Init();
+	UpdateMesh();
+}
+
+void Chunk::UnloadChunk() {
+	if (!isLoaded) {
+		return;
+	}
+
+	buffer.Bind();
+	buffer.Delete();
+	buffer.Unbind();
+	isLoaded = false;
 }
 
 void Chunk::AnalyzeChunk() {

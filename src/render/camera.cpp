@@ -1,10 +1,10 @@
 #include "camera.h"
 
 Camera::Camera() {
-    pos = glm::vec3(0.0f, 1.0f, 0.0f);
+    pos = glm::vec3(1.0f, 2.0f, 1.0f);
     front = glm::vec3(0.0f, 0.0f, -1.0f);
     up = glm::vec3(0.0f, 1.0f, 0.0f);
-    yaw = -90.0f;
+    yaw = 45.0f;
     pitch = 0.0f;
 }
 

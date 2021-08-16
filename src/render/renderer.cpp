@@ -114,12 +114,6 @@ void Renderer::Init(InputHandler* inputHandlerPointer, float* dtPointer, float* 
 		20, 22, 23,
 	};
 
-	basicVertexArray.Init();
-	basicVertexArray.Bind();
-	basicVertexArray.SendVerticies(&verticies[0], verticies.size() * sizeof(float));
-	basicVertexArray.SendIndicies(&indicies[0], indicies.size() * sizeof(unsigned int));
-	basicVertexArray.Unbind();
-
 	skyVertexArray.Init();
 	skyVertexArray.Bind();
 	skyVertexArray.SendVerticies(&verticies[0], verticies.size() * sizeof(float));
@@ -134,7 +128,6 @@ void Renderer::Init(InputHandler* inputHandlerPointer, float* dtPointer, float* 
 }
 
 void Renderer::PrepareMesh() {
-	basicVertexArray.Bind();
 	basicTexture.Bind();
 	basicShader.Bind();
 
@@ -151,18 +144,8 @@ void Renderer::PrepareMesh() {
 	basicShader.SetVec3("lightPos", glm::value_ptr(lightPos));
 }
 
-void Renderer::DrawMesh(float x, float y, float z) {
-	glm::mat4 model = glm::mat4(1.0f);
-	model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
-	model = glm::translate(model, glm::vec3(x, y, z));
-
-	basicShader.SetMat4("model", glm::value_ptr(model));
-
-	basicVertexArray.Draw();
-}
-
 void Renderer::DrawChunk(Chunk* chunk) {
-	if (chunk->IsChunkReady() == false) {
+	if (chunk->IsLoaded() == false) {
 		return;
 	}
 

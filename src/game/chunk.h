@@ -8,16 +8,18 @@ class Chunk {
 public:
     Chunk();
     void Init(int chunkX, int chunkY);
+    void LoadChunk();
+    void UnloadChunk();
     void UpdateMesh();
     void AnalyzeChunk();
     int GetXCoord();
     int GetZCoord();
-    bool IsChunkReady();
+    bool IsLoaded();
     VertexBuffer* GetChunkBuffer();
 private:
     VertexBuffer buffer;
     unsigned char data[16][16][16];
     int xCoord, zCoord;
     bool needsUpdate;
-    bool isReady;
+    bool isLoaded;
 };
