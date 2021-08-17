@@ -6,6 +6,6 @@ Game::Game() {
 void Game::Init() {
     std::cout << "Initializing game" << std::endl;
 
-    world.Init();
-    world.Generate(12345);
+    world.Init(12345);
+    world.Generate();
 }

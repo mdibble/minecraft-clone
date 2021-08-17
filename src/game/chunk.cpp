@@ -1,31 +1,35 @@
 #include "chunk.h"
 
 Chunk::Chunk() {
-    for (int x = 0; x < 16; x += 1) {
-        for (int y = 0; y < 15; y += 1) {
-            for (int z = 0; z < 16; z += 1) {
-                data[x][y][z] = 2;
-            }
-        }
-    }
-
-    for (int x = 0; x < 16; x += 1) {
-        for (int y = 15; y < 16; y += 1) {
-            for (int z = 0; z < 16; z += 1) {
-                data[x][y][z] = 1;
-            }
-        }
-    }
-
     needsUpdate = true;
 	isLoaded = false;
 	xCoord = 0;
 	zCoord = 0;
+
+	for (int x = 0; x < 16; x += 1) {
+		for (int y = 0; y < 16; y += 1) {
+			for (int z = 0; z < 16; z += 1) {
+				data[x][y][z] = 0;
+			}
+		}
+	}
 }
 
 void Chunk::Init(int chunkX, int chunkZ) {
 	xCoord = chunkX;
 	zCoord = chunkZ;
+}
+
+void Chunk::Generate() {
+	for (int x = 0; x < 16; x += 1) {
+		for (int z = 0; z < 16; z += 1) {
+			int height = noise(x * (xCoord * 16), z * (zCoord * 16));
+			for (int y = 0; y < height; y += 1) {
+				data[x][y][z] = 2;
+			}
+			data[x][height][z] = 1;
+		}
+	}
 }
 
 void Chunk::UpdateMesh() {
@@ -38,7 +42,6 @@ void Chunk::UpdateMesh() {
 	// Top side
 
 	normal = { 0.0f, 1.0f, 0.0f };
-
 	for (int x = 0; x < 16; x += 1) {
 		for (int y = 0; y < 16; y += 1) {
 			for (int z = 0; z < 16; z += 1) {
@@ -158,7 +161,7 @@ void Chunk::UpdateMesh() {
 					continue;
 				}
 
-				if (x == 0 || data[x][x - 1][z] == 0) {
+				if (x == 0 || data[x - 1][y][z] == 0) {
 					unsigned int blockTexIndex = data[x][y][z] - 1;
 
 					float texX, texY;
@@ -214,7 +217,7 @@ void Chunk::UpdateMesh() {
 					continue;
 				}
 
-				if (x == 15 || data[x][x + 1][z] == 0) {
+				if (x == 15 || data[x + 1][y][z] == 0) {
 					unsigned int blockTexIndex = data[x][y][z] - 1;
 
 					float texX, texY;
@@ -270,7 +273,7 @@ void Chunk::UpdateMesh() {
 					continue;
 				}
 
-				if (z == 15 || data[x][z + 1][z] == 0) {
+				if (z == 15 || data[x][y][z + 1] == 0) {
 					unsigned int blockTexIndex = data[x][y][z] - 1;
 
 					float texX, texY;
@@ -326,7 +329,7 @@ void Chunk::UpdateMesh() {
 					continue;
 				}
 
-				if (z == 0 || data[x][z - 1][z] == 0) {
+				if (z == 0 || data[x][y][z - 1] == 0) {
 					unsigned int blockTexIndex = data[x][y][z] - 1;
 
 					float texX, texY;

@@ -13,7 +13,6 @@ private:
     Renderer renderer;
     InputHandler inputHandler;
     Game game;
-    Chunk chunkTest;
     float dt;
     float lastFrameTime;
 };

@@ -3,11 +3,13 @@
 #include <vector>
 
 #include "../render/vertex_buffer.h"
+#include "world_gen.h"
 
 class Chunk {
 public:
     Chunk();
     void Init(int chunkX, int chunkY);
+    void Generate();
     void LoadChunk();
     void UnloadChunk();
     void UpdateMesh();

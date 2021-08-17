@@ -10,8 +10,6 @@ void Lightning::Init() {
     renderer.Init(&inputHandler, &dt, &lastFrameTime);
     game.Init();
 
-    chunkTest.Init(0, 0);
-
     std::cout << "App initialization complete" << std::endl;
 }
 

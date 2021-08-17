@@ -5,10 +5,11 @@
 class World {
 public:
     World();
-    void Init();
-    void Generate(int seed);
+    void Init(int seed);
+    void Generate();
     Chunk* GetChunk(int x, int z);
 private:
+    int seed;
     std::vector<std::vector<Chunk>> chunks;
 };
 
