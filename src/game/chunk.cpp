@@ -53,8 +53,8 @@ void Chunk::UpdateMesh() {
 					unsigned int blockTexIndex = data[x][y][z] - 1;
 
 					float texX, texY;
-					texX = 0.0625 * (blockTexIndex % 16);
-					texY = 0.0625 * 3 * floor(blockTexIndex / 16);
+					texX = 0.0625f * (blockTexIndex % 16);
+					texY = 0.0625f * 3 * (float)floor(blockTexIndex / 16);
 					texY += 0.0625; // Top texture
 
 					std::vector<float> coords;
@@ -109,8 +109,8 @@ void Chunk::UpdateMesh() {
 					unsigned int blockTexIndex = data[x][y][z] - 1;
 
 					float texX, texY;
-					texX = 0.0625 * (blockTexIndex % 16);
-					texY = 0.0625 * 3 * floor(blockTexIndex / 16);
+					texX = 0.0625f * (blockTexIndex % 16);
+					texY = 0.0625f * 3 * (float)floor(blockTexIndex / 16);
 					texY += 0.000; // Bottom texture
 
 					std::vector<float> coords;
@@ -165,8 +165,8 @@ void Chunk::UpdateMesh() {
 					unsigned int blockTexIndex = data[x][y][z] - 1;
 
 					float texX, texY;
-					texX = 0.0625 * (blockTexIndex % 16);
-					texY = 0.0625 * 3 * floor(blockTexIndex / 16);
+					texX = 0.0625f * (blockTexIndex % 16);
+					texY = 0.0625f * 3 * (float)floor(blockTexIndex / 16);
 					texY += 0.125; // Side texture
 
 					std::vector<float> coords;
@@ -221,8 +221,8 @@ void Chunk::UpdateMesh() {
 					unsigned int blockTexIndex = data[x][y][z] - 1;
 
 					float texX, texY;
-					texX = 0.0625 * (blockTexIndex % 16);
-					texY = 0.0625 * 3 * floor(blockTexIndex / 16);
+					texX = 0.0625f * (blockTexIndex % 16);
+					texY = 0.0625f * 3 * (float)floor(blockTexIndex / 16);
 					texY += 0.125; // Side texture
 
 					std::vector<float> coords;
@@ -277,8 +277,8 @@ void Chunk::UpdateMesh() {
 					unsigned int blockTexIndex = data[x][y][z] - 1;
 
 					float texX, texY;
-					texX = 0.0625 * (blockTexIndex % 16);
-					texY = 0.0625 * 3 * floor(blockTexIndex / 16);
+					texX = 0.0625f * (blockTexIndex % 16);
+					texY = 0.0625f * 3 * (float)floor(blockTexIndex / 16);
 					texY += 0.125; // Side texture
 
 					std::vector<float> coords;
@@ -333,8 +333,8 @@ void Chunk::UpdateMesh() {
 					unsigned int blockTexIndex = data[x][y][z] - 1;
 
 					float texX, texY;
-					texX = 0.0625 * (blockTexIndex % 16);
-					texY = 0.0625 * 3 * floor(blockTexIndex / 16);
+					texX = 0.0625f * (blockTexIndex % 16);
+					texY = 0.0625f * 3 * (float)floor(blockTexIndex / 16);
 					texY += 0.125; // Side texture
 
 					std::vector<float> coords;
@@ -376,8 +376,8 @@ void Chunk::UpdateMesh() {
 	}
 
     buffer.Bind();
-    buffer.SendVerticies(&verticies[0], verticies.size() * sizeof(float));
-    buffer.SendIndicies(&indicies[0], indicies.size() * sizeof(unsigned int));
+    buffer.SendVerticies(&verticies[0], (int)verticies.size() * sizeof(float));
+    buffer.SendIndicies(&indicies[0], (int)indicies.size() * sizeof(unsigned int));
     buffer.Unbind();
 }
 
