@@ -29,9 +29,14 @@ void Lightning::Run() {
 
         for (int i = 0; i < 16; i += 1) {
             for (int j = 0; j < 16; j += 1) {
-                if (!chunkLoadedThisFrame && game.world.GetChunk(i, j)->IsLoaded() == false) {
-                    game.world.GetChunk(i, j)->LoadChunk();
+                Chunk* chunk = game.world.GetChunk(i, j);
+                
+                if (!chunkLoadedThisFrame && chunk->IsLoaded() == false) {
+                    chunk->LoadChunk();
                     chunkLoadedThisFrame = true;
+                }
+                if (chunk->NeedsUpdate()) {
+                    chunk->UpdateMesh();
                 }
                 renderer.DrawChunk(game.world.GetChunk(i, j));
             }

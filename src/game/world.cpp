@@ -29,6 +29,18 @@ void World::Generate() {
     }
 }
 
+void World::PlaceBlock(int x, int y, int z, int block) {
+    Chunk* chunk = GetChunkFromCoords(x, z);
+    int localX = x % CHUNK_SIZE_X;
+    int localZ = z % CHUNK_SIZE_Z;
+    
+    chunk->SetBlock(localX, y, localZ, block);
+}
+
 Chunk* World::GetChunk(int x, int z) {
     return &chunks[x][z];
+}
+
+Chunk* World::GetChunkFromCoords(int x, int z) {
+    return &chunks[x / 16][z / 16];
 }

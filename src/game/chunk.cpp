@@ -1,7 +1,7 @@
 #include "chunk.h"
 
 Chunk::Chunk() {
-    needsUpdate = true;
+    needsUpdate = false;
 	isLoaded = false;
 	xCoord = 0;
 	zCoord = 0;
@@ -23,7 +23,9 @@ void Chunk::Init(int chunkX, int chunkZ) {
 void Chunk::Generate() {
 	for (int x = 0; x < 16; x += 1) {
 		for (int z = 0; z < 16; z += 1) {
-			int height = Generator::GetXZHeight(x + (xCoord * 16), z + (zCoord * 16));
+			int worldX = x + (xCoord * 16);
+			int worldZ = z + (zCoord * 16);
+			int height = Generator::GetXZHeight(worldX, worldZ);
 
 			for (int y = 0; y <= height; y += 1) {
 				if (y >= 0 && y <= 1) {
@@ -47,6 +49,24 @@ void Chunk::Generate() {
 				}
 
 				data[x][y][z] = 2;
+			}
+
+			if (Generator::IsTree(worldX, worldZ)) {
+				if (x > 2 && x < 14 && z > 2 && z < 14) {
+					if (data[x][height][z] == 1) {
+						for (int i = x - 1; i < x + 2; i += 1) {
+							for (int j = height + 5; j < height + 8; j += 1) {
+								for (int k = z - 1; k < z + 2; k += 1) {
+									data[i][j][k] = 7;
+								}
+							}
+						}
+
+						for (int i = height + 1; i < height + 6; i += 1) {
+							data[x][i][z] = 6;
+						}
+					}
+				}
 			}
 		}
 	}
@@ -399,10 +419,15 @@ void Chunk::UpdateMesh() {
     buffer.SendVerticies(&verticies[0], (int)verticies.size() * sizeof(float));
     buffer.SendIndicies(&indicies[0], (int)indicies.size() * sizeof(unsigned int));
     buffer.Unbind();
+	needsUpdate = false;
 }
 
 bool Chunk::IsLoaded() {
 	return isLoaded;
+}
+
+bool Chunk::NeedsUpdate() {
+	return needsUpdate;
 }
 
 void Chunk::LoadChunk() {
@@ -426,10 +451,9 @@ void Chunk::UnloadChunk() {
 	isLoaded = false;
 }
 
-void Chunk::AnalyzeChunk() {
-    if (needsUpdate) {
-        UpdateMesh();
-    }
+void Chunk::SetBlock(int x, int y, int z, int block) {
+	data[x][y][z] = block;
+	needsUpdate = true;
 }
 
 int Chunk::GetXCoord() {

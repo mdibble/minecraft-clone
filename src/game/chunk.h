@@ -17,10 +17,11 @@ public:
     void LoadChunk();
     void UnloadChunk();
     void UpdateMesh();
-    void AnalyzeChunk();
     int GetXCoord();
     int GetZCoord();
     bool IsLoaded();
+    bool NeedsUpdate();
+    void SetBlock(int x, int y, int z, int block);
     VertexBuffer* GetChunkBuffer();
 private:
     VertexBuffer buffer;
