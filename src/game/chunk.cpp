@@ -6,9 +6,9 @@ Chunk::Chunk() {
 	xCoord = 0;
 	zCoord = 0;
 
-	for (int x = 0; x < 16; x += 1) {
-		for (int y = 0; y < 16; y += 1) {
-			for (int z = 0; z < 16; z += 1) {
+	for (int x = 0; x < CHUNK_SIZE_X; x += 1) {
+		for (int y = 0; y < CHUNK_SIZE_Y; y += 1) {
+			for (int z = 0; z < CHUNK_SIZE_Z; z += 1) {
 				data[x][y][z] = 0;
 			}
 		}
@@ -23,11 +23,31 @@ void Chunk::Init(int chunkX, int chunkZ) {
 void Chunk::Generate() {
 	for (int x = 0; x < 16; x += 1) {
 		for (int z = 0; z < 16; z += 1) {
-			int height = noise(x * (xCoord * 16), z * (zCoord * 16));
-			for (int y = 0; y < height; y += 1) {
+			int height = Generator::GetXZHeight(x + (xCoord * 16), z + (zCoord * 16));
+
+			for (int y = 0; y <= height; y += 1) {
+				if (y >= 0 && y <= 1) {
+					data[x][y][z] = 5;
+					continue;
+				}
+
+				if (y >= 2 && y <= 4) {
+					data[x][y][z] = 4;
+					continue;
+				}
+
+				if (y >= 5 && y <= 6) {
+					data[x][y][z] = 3;
+					continue;
+				}
+
+				if (y == height) {
+					data[x][y][z] = 1;
+					continue;
+				}
+
 				data[x][y][z] = 2;
 			}
-			data[x][height][z] = 1;
 		}
 	}
 }
@@ -42,9 +62,9 @@ void Chunk::UpdateMesh() {
 	// Top side
 
 	normal = { 0.0f, 1.0f, 0.0f };
-	for (int x = 0; x < 16; x += 1) {
-		for (int y = 0; y < 16; y += 1) {
-			for (int z = 0; z < 16; z += 1) {
+	for (int x = 0; x < CHUNK_SIZE_X; x += 1) {
+		for (int y = 0; y < CHUNK_SIZE_Y; y += 1) {
+			for (int z = 0; z < CHUNK_SIZE_Z; z += 1) {
 				if (data[x][y][z] == 0) {
 					continue;
 				}
@@ -98,9 +118,9 @@ void Chunk::UpdateMesh() {
 	// Bottom side
 
 	normal = { 0.0f, -1.0f, 0.0f };
-	for (int x = 0; x < 16; x += 1) {
-		for (int y = 0; y < 16; y += 1) {
-			for (int z = 0; z < 16; z += 1) {
+	for (int x = 0; x < CHUNK_SIZE_X; x += 1) {
+		for (int y = 0; y < CHUNK_SIZE_Y; y += 1) {
+			for (int z = 0; z < CHUNK_SIZE_Z; z += 1) {
 				if (data[x][y][z] == 0) {
 					continue;
 				}
@@ -154,9 +174,9 @@ void Chunk::UpdateMesh() {
 	// Left side
 
 	normal = { -1.0f, 0.0f, 0.0f };
-	for (int x = 0; x < 16; x += 1) {
-		for (int y = 0; y < 16; y += 1) {
-			for (int z = 0; z < 16; z += 1) {
+	for (int x = 0; x < CHUNK_SIZE_X; x += 1) {
+		for (int y = 0; y < CHUNK_SIZE_Y; y += 1) {
+			for (int z = 0; z < CHUNK_SIZE_Z; z += 1) {
 				if (data[x][y][z] == 0) {
 					continue;
 				}
@@ -210,9 +230,9 @@ void Chunk::UpdateMesh() {
 	// Right side
 
 	normal = { 1.0f, 0.0f, 0.0f };
-	for (int x = 0; x < 16; x += 1) {
-		for (int y = 0; y < 16; y += 1) {
-			for (int z = 0; z < 16; z += 1) {
+	for (int x = 0; x < CHUNK_SIZE_X; x += 1) {
+		for (int y = 0; y < CHUNK_SIZE_Y; y += 1) {
+			for (int z = 0; z < CHUNK_SIZE_Z; z += 1) {
 				if (data[x][y][z] == 0) {
 					continue;
 				}
@@ -266,9 +286,9 @@ void Chunk::UpdateMesh() {
 	// Front side
 
 	normal = { 0.0f, 0.0f, 1.0f };
-	for (int x = 0; x < 16; x += 1) {
-		for (int y = 0; y < 16; y += 1) {
-			for (int z = 0; z < 16; z += 1) {
+	for (int x = 0; x < CHUNK_SIZE_X; x += 1) {
+		for (int y = 0; y < CHUNK_SIZE_Y; y += 1) {
+			for (int z = 0; z < CHUNK_SIZE_Z; z += 1) {
 				if (data[x][y][z] == 0) {
 					continue;
 				}
@@ -322,9 +342,9 @@ void Chunk::UpdateMesh() {
 	// Back side
 
 	normal = { 0.0f, 0.0f, -1.0f };
-	for (int x = 0; x < 16; x += 1) {
-		for (int y = 0; y < 16; y += 1) {
-			for (int z = 0; z < 16; z += 1) {
+	for (int x = 0; x < CHUNK_SIZE_X; x += 1) {
+		for (int y = 0; y < CHUNK_SIZE_Y; y += 1) {
+			for (int z = 0; z < CHUNK_SIZE_Z; z += 1) {
 				if (data[x][y][z] == 0) {
 					continue;
 				}

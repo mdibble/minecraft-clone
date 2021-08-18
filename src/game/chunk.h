@@ -5,6 +5,10 @@
 #include "../render/vertex_buffer.h"
 #include "world_gen.h"
 
+#define CHUNK_SIZE_X 16
+#define CHUNK_SIZE_Y 32
+#define CHUNK_SIZE_Z 16
+
 class Chunk {
 public:
     Chunk();
@@ -20,7 +24,7 @@ public:
     VertexBuffer* GetChunkBuffer();
 private:
     VertexBuffer buffer;
-    unsigned char data[16][16][16];
+    unsigned char data[CHUNK_SIZE_X][CHUNK_SIZE_Y][CHUNK_SIZE_Z];
     int xCoord, zCoord;
     bool needsUpdate;
     bool isLoaded;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "chunk.h"
+#include "world_gen.h"
 
 class World {
 public:

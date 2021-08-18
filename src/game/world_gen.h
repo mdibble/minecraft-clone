@@ -1,5 +1,10 @@
 #pragma once
 
-#include <stdlib.h>
+#include <noise/noise.h>
 
-int noise(int x, int z);
+namespace Generator {
+
+    void SetSeed(unsigned int seedVal);
+    int GetXZHeight(int x, int z);
+
+}

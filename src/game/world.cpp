@@ -8,6 +8,7 @@ void World::Init(int seedVal) {
     std::cout << "Initializing world" << std::endl;
 
     seed = seedVal;
+    Generator::SetSeed(seed);
 
     chunks.resize(16);
     for (int i = 0; i < 16; i += 1) {

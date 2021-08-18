@@ -1,7 +1,9 @@
 #pragma once
 
 #include "world.h"
+
 #include <iostream>
+#include <stdlib.h>
 
 class Game {
 public:
