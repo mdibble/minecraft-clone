@@ -7,6 +7,7 @@ class World {
 public:
     World();
     void PlaceBlock(int x, int y, int z, int block);
+    int GetHighestBlockOfCoord(int x, int z);
     void Init(int seed);
     void Generate();
     Chunk* GetChunk(int x, int z);

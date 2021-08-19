@@ -7,8 +7,8 @@ Lightning::Lightning() {
 
 void Lightning::Init() {
     std::cout << "Initializing application" << std::endl;
-    renderer.Init(&inputHandler, &dt, &lastFrameTime);
-    game.Init();
+    game.Init(&inputHandler);
+    renderer.Init(&inputHandler, &(game.player), &dt, &lastFrameTime);
 
     std::cout << "App initialization complete" << std::endl;
 }
@@ -19,10 +19,10 @@ void Lightning::Run() {
         dt = currentTime - lastFrameTime;
         lastFrameTime = currentTime;
 
+        game.player.UpdateMovementFromInputs(&dt);
+
         renderer.BeginFrame();
-
         renderer.DrawSky();
-
         renderer.PrepareMesh();
 
         bool chunkLoadedThisFrame = false;

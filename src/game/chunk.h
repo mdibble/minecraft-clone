@@ -22,6 +22,7 @@ public:
     bool IsLoaded();
     bool NeedsUpdate();
     void SetBlock(int x, int y, int z, int block);
+    int GetHighestBlockOfCoord(int x, int z);
     VertexBuffer* GetChunkBuffer();
 private:
     VertexBuffer buffer;

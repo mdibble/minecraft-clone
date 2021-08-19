@@ -16,6 +16,12 @@ void Camera::SetPos(glm::vec3 newPos) {
     pos = newPos;
 }
 
+void Camera::SetCameraFromPlayerData(Player* player) {
+    pos = glm::vec3(player->GetPos());
+    yaw = player->GetLookDir();
+    pitch = player->GetPitch();
+}
+
 void Camera::UpdatePitch(float val) {
     pitch += val;
     if (pitch > 89.0f) {

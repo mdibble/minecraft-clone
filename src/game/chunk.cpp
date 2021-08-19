@@ -422,6 +422,18 @@ void Chunk::UpdateMesh() {
 	needsUpdate = false;
 }
 
+int Chunk::GetHighestBlockOfCoord(int x, int z) {
+	int result = 0;
+
+	for (int y = 1; y < CHUNK_SIZE_Y; y += 1) {
+		if (data[x][y][z] != 0) {
+			result = y;
+		}
+	}
+
+	return result;
+}
+
 bool Chunk::IsLoaded() {
 	return isLoaded;
 }

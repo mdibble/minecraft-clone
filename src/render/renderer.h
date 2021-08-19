@@ -14,11 +14,12 @@
 
 #include "../input/input.h"
 #include "../game/chunk.h"
+#include "../game/player.h"
 
 class Renderer {
 public:
     Renderer();
-    void Init(InputHandler* inputHandlerPointer, float* dtPointer, float* lastFrameTime);
+    void Init(InputHandler* inputHandlerPointer, Player* playerPointer, float* dtPointer, float* lastFrameTime);
     void EndFrame();
     void BeginFrame();
     bool IsActive();
@@ -28,6 +29,7 @@ public:
 private:
     GLFWwindow* window;
     InputHandler* inputHandler;
+    Player* player;
     Camera camera;
     Texture basicTexture, skyTexture;
     Shader basicShader, skyShader;

@@ -3,13 +3,14 @@
 Renderer::Renderer() {
 	window = nullptr;
 	inputHandler = nullptr;
+	player = nullptr;
 	dt = nullptr;
 	lastFrameTime = nullptr;
 	viewportW = 1920;
 	viewportH = 1080;
 }
 
-void Renderer::Init(InputHandler* inputHandlerPointer, float* dtPointer, float* lastFrameTimePointer) {
+void Renderer::Init(InputHandler* inputHandlerPointer, Player* playerPointer, float* dtPointer, float* lastFrameTimePointer) {
 	std::cout << "Initializing renderer" << std::endl;
 
 	glfwInit();
@@ -39,6 +40,7 @@ void Renderer::Init(InputHandler* inputHandlerPointer, float* dtPointer, float* 
 	glfwMakeContextCurrent(window);
 
 	inputHandler = inputHandlerPointer;
+	player = playerPointer;
 	dt = dtPointer;
 	lastFrameTime = lastFrameTimePointer;
 
@@ -169,6 +171,7 @@ void Renderer::DrawSky() {
 	glm::mat4 model = glm::mat4(1.0f);
 	model = glm::scale(model, glm::vec3(50.0f, 50.0f, 50.0f));
 	
+	camera.SetCameraFromPlayerData(player);
 	glm::mat4 view = camera.GenViewMat();
 	view = glm::translate(view, camera.GetPos());
 
@@ -186,19 +189,6 @@ void Renderer::BeginFrame() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	float camSpeed = 0.5f * *dt;
-
-	if (inputHandler->IsKeyPressed(GLFW_KEY_W)) {
-		camera.MoveAlongFront(camSpeed);
-	}
-	if (inputHandler->IsKeyPressed(GLFW_KEY_S)) {
-		camera.MoveAlongFront(-camSpeed);
-	}
-	if (inputHandler->IsKeyPressed(GLFW_KEY_A)) {
-		camera.MovePerpFromFront(-camSpeed);
-	}
-	if (inputHandler->IsKeyPressed(GLFW_KEY_D)) {
-		camera.MovePerpFromFront(camSpeed);
-	}
 }
 
 void Renderer::EndFrame() {
@@ -232,9 +222,9 @@ void Renderer::MouseCallback(double xpos, double ypos) {
 	float camSpeed = 0.05f;
 
 	if (xOffset != 0.0f) {
-		camera.UpdateYaw(xOffset * camSpeed);
+		player->UpdateLookDir(xOffset * camSpeed);
 	}
 	if (yOffset != 0.0f) {
-		camera.UpdatePitch(yOffset * -camSpeed);
+		player->UpdatePitch(yOffset * -camSpeed);
 	}
 }
