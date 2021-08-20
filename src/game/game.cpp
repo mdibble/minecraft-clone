@@ -9,11 +9,7 @@ void Game::Init(InputHandler* inputHandlerPointer) {
 
     inputHandler = inputHandlerPointer;
 
-    srand(time(0));
-    int seed = rand();
-    std::cout << seed << std::endl;
-
-    world.Init(seed);
+    world.Init(12345);
     world.Generate();
 
     player.Init(1, 2, 1, inputHandler);

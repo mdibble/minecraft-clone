@@ -34,7 +34,7 @@ void Shader::Init(std::string vertPath, std::string fragPath) {
         fragSource = fragStream.str();
     }
     catch (std::ifstream::failure& e) {
-        std::cout << "Error: Shader file could not be read" << std::endl;
+        std::cout << "Error: Shader file could not be read - " << e.code() << std::endl;
     }
 
     const char* vertCStr = vertSource.c_str();

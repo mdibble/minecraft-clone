@@ -118,8 +118,8 @@ void Renderer::Init(InputHandler* inputHandlerPointer, Player* playerPointer, fl
 
 	skyVertexArray.Init();
 	skyVertexArray.Bind();
-	skyVertexArray.SendVerticies(&verticies[0], verticies.size() * sizeof(float));
-	skyVertexArray.SendIndicies(&indicies[0], indicies.size() * sizeof(unsigned int));
+	skyVertexArray.SendVerticies(&verticies[0], (int)verticies.size() * sizeof(float));
+	skyVertexArray.SendIndicies(&indicies[0], (int)indicies.size() * sizeof(unsigned int));
 	skyVertexArray.Unbind();
 
 	basicTexture.Init("texture/basic.jpg");
@@ -169,7 +169,7 @@ void Renderer::DrawSky() {
 	skyShader.Bind();
 
 	glm::mat4 model = glm::mat4(1.0f);
-	model = glm::scale(model, glm::vec3(50.0f, 50.0f, 50.0f));
+	model = glm::scale(model, glm::vec3(80.0f, 80.0f, 80.0f));
 	
 	camera.SetCameraFromPlayerData(player);
 	glm::mat4 view = camera.GenViewMat();

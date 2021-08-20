@@ -89,7 +89,7 @@ void Chunk::UpdateMesh() {
 					continue;
 				}
 
-				if (y == 15 || data[x][y + 1][z] == 0) {
+				if (y == CHUNK_SIZE_Y - 1 || data[x][y + 1][z] == 0) {
 					unsigned int blockTexIndex = data[x][y][z] - 1;
 
 					float texX, texY;
@@ -257,7 +257,7 @@ void Chunk::UpdateMesh() {
 					continue;
 				}
 
-				if (x == 15 || data[x + 1][y][z] == 0) {
+				if (x == CHUNK_SIZE_X - 1 || data[x + 1][y][z] == 0) {
 					unsigned int blockTexIndex = data[x][y][z] - 1;
 
 					float texX, texY;
@@ -313,7 +313,7 @@ void Chunk::UpdateMesh() {
 					continue;
 				}
 
-				if (z == 15 || data[x][y][z + 1] == 0) {
+				if (z == CHUNK_SIZE_Z - 1 || data[x][y][z + 1] == 0) {
 					unsigned int blockTexIndex = data[x][y][z] - 1;
 
 					float texX, texY;

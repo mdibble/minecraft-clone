@@ -17,17 +17,17 @@ void InputHandler::HandleKeyInput(int key, int scancode, int action, int mods) {
 
 void InputHandler::HandleMouseInput(double xpos, double ypos) {
     if (firstMouseMovement) {
-        lastMouseX = xpos;
-        lastMouseY = ypos;
-        currMouseX = xpos;
-        currMouseY = ypos;
+        lastMouseX = (float)xpos;
+        lastMouseY = (float)ypos;
+        currMouseX = (float)xpos;
+        currMouseY = (float)ypos;
         firstMouseMovement = false;
         return;
     }
     lastMouseX = currMouseX;
     lastMouseY = currMouseY;
-    currMouseX = xpos;
-    currMouseY = ypos;
+    currMouseX = (float)xpos;
+    currMouseY = (float)ypos;
 }
 
 bool InputHandler::IsKeyPressed(int key) {

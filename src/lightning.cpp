@@ -2,7 +2,7 @@
 
 Lightning::Lightning() {
     dt = 0.0f;
-    lastFrameTime = glfwGetTime();
+    lastFrameTime = (float)glfwGetTime();
 }
 
 void Lightning::Init() {
@@ -15,7 +15,7 @@ void Lightning::Init() {
 
 void Lightning::Run() {
     while (renderer.IsActive()) {
-        float currentTime = glfwGetTime();
+        float currentTime = (float)glfwGetTime();
         dt = currentTime - lastFrameTime;
         lastFrameTime = currentTime;
 
