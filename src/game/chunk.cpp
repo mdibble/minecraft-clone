@@ -468,6 +468,10 @@ void Chunk::SetBlock(int x, int y, int z, int block) {
 	needsUpdate = true;
 }
 
+int Chunk::GetBlock(int x, int y, int z) {
+	return data[x][y][z];
+}
+
 int Chunk::GetXCoord() {
 	return xCoord;
 }

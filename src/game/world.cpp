@@ -38,11 +38,19 @@ void World::PlaceBlock(int x, int y, int z, int block) {
 }
 
 int World::GetHighestBlockOfCoord(int x, int z) {
-    Chunk* chunk = GetChunkFromCoords(x * 16, z * 16);
+    Chunk* chunk = GetChunkFromCoords(x, z);
     int localX = x % CHUNK_SIZE_X;
     int localZ = z % CHUNK_SIZE_Z;
 
     return chunk->GetHighestBlockOfCoord(localX, localZ);
+}
+
+int World::GetBlockOfCoord(int x, int y, int z) {
+    Chunk* chunk = GetChunkFromCoords(x, z);
+    int localX = x % CHUNK_SIZE_X;
+    int localZ = z % CHUNK_SIZE_Z;
+
+    return chunk->GetBlock(localX, y, localZ);
 }
 
 Chunk* World::GetChunk(int x, int z) {

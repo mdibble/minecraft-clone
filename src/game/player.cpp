@@ -9,11 +9,12 @@ Player::Player() {
     inputHandler = nullptr;
 }
 
-void Player::Init(float x, float y, float z, InputHandler* inputHandlerPointer) {
+void Player::Init(float x, float y, float z, InputHandler* inputHandlerPointer, World* worldPointer) {
     posX = x;
     posY = y;
     posZ = z;
     inputHandler = inputHandlerPointer;
+    world = worldPointer;
 }
 
 glm::vec3 Player::GetPos() {
@@ -26,6 +27,16 @@ float Player::GetLookDir() {
 
 float Player::GetPitch() {
     return pitch;
+}
+
+bool Player::CheckCollision() {
+    int block = world->GetBlockOfCoord(posX, posY, posZ);
+
+    if (block > 0) {
+        return true;
+    }
+
+    return false;
 }
 
 void Player::Forward(float amount) {
@@ -55,7 +66,7 @@ void Player::Strafe(float amount) {
 }
 
 void Player::UpdateMovementFromInputs(float* dt) {
-    float camSpeed = 0.5f * *dt;
+    float camSpeed = 10.0f * *dt;
 
     if (inputHandler->IsKeyPressed(GLFW_KEY_W)) {
         Forward(camSpeed);
@@ -87,6 +98,7 @@ void Player::UpdateLookDir(float val) {
 
 void Player::Debug() {
     std::cout << "Pos: " << posX << " " << posY << " " << posZ << std::endl;
-    std::cout << "Look direction: " << lookDir << std::endl;
-    std::cout << "Pitch: " << pitch << std::endl;
+    // std::cout << "Look direction: " << lookDir << std::endl;
+    // std::cout << "Pitch: " << pitch << std::endl;
+    std::cout << "Collision: " << CheckCollision() << std::endl;
 }

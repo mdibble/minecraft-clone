@@ -19,6 +19,8 @@ void Lightning::Run() {
         dt = currentTime - lastFrameTime;
         lastFrameTime = currentTime;
 
+        game.player.CheckCollision();
+
         game.player.UpdateMovementFromInputs(&dt);
 
         renderer.BeginFrame();
@@ -42,6 +44,7 @@ void Lightning::Run() {
             }
         }
 
+        game.player.Debug();
         renderer.EndFrame();
     }
 }

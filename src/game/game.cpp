@@ -12,5 +12,9 @@ void Game::Init(InputHandler* inputHandlerPointer) {
     world.Init(12345);
     world.Generate();
 
-    player.Init(1, 2, 1, inputHandler);
+    int x = 26;
+    int z = 26;
+    int y = world.GetHighestBlockOfCoord(x, z);
+
+    player.Init(x, y + 1, z, inputHandler, &world);
 }

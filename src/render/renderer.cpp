@@ -136,7 +136,7 @@ void Renderer::PrepareMesh() {
 	glm::mat4 view = camera.GenViewMat();
 
 	glm::mat4 proj = glm::mat4(1.0f);
-	proj = glm::perspective(glm::radians(45.0f), (float)viewportW / (float)viewportH, 0.1f, 100.0f);
+	proj = glm::perspective(glm::radians(45.0f), (float)viewportW / (float)viewportH, 0.1f, 1000.0f);
 
 	basicShader.SetMat4("view", glm::value_ptr(view));
 	basicShader.SetMat4("proj", glm::value_ptr(proj));
@@ -154,7 +154,6 @@ void Renderer::DrawChunk(Chunk* chunk) {
 	VertexBuffer* buffer = chunk->GetChunkBuffer();
 
 	glm::mat4 model = glm::mat4(1.0f);
-	model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
 	model = glm::translate(model, glm::vec3(chunk->GetXCoord() * 16, 0.0, chunk->GetZCoord() * 16));
 
 	basicShader.SetMat4("model", glm::value_ptr(model));
@@ -169,14 +168,14 @@ void Renderer::DrawSky() {
 	skyShader.Bind();
 
 	glm::mat4 model = glm::mat4(1.0f);
-	model = glm::scale(model, glm::vec3(80.0f, 80.0f, 80.0f));
+	model = glm::scale(model, glm::vec3(1000.0f, 1000.0f, 1000.0f));
 	
 	camera.SetCameraFromPlayerData(player);
 	glm::mat4 view = camera.GenViewMat();
 	view = glm::translate(view, camera.GetPos());
 
 	glm::mat4 proj = glm::mat4(1.0f);
-	proj = glm::perspective(glm::radians(45.0f), (float)viewportW / (float)viewportH, 0.1f, 100.0f);
+	proj = glm::perspective(glm::radians(45.0f), (float)viewportW / (float)viewportH, 0.1f, 1000.0f);
 
 	skyShader.SetMat4("model", glm::value_ptr(model));
 	skyShader.SetMat4("view", glm::value_ptr(view));
