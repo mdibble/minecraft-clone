@@ -22,6 +22,8 @@ void Lightning::Run() {
         game.player.CheckCollision();
 
         game.player.UpdateMovementFromInputs(&dt);
+        game.player.UpdatePosFromVel();
+        game.player.UpdateVel(&dt);
 
         renderer.BeginFrame();
         renderer.DrawSky();

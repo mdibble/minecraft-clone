@@ -15,17 +15,22 @@ public:
     void UpdateMovementFromInputs(float* dt);
     void UpdatePitch(float val);
     void UpdateLookDir(float val);
+    void UpdatePosFromVel();
+    void UpdateVel(float* dt);
     void Debug();
     glm::vec3 GetPos();
     float GetLookDir();
     float GetPitch();
-    bool CheckCollision();
+    void CheckCollision();
 private:
     void Forward(float val);
     void Strafe(float val);
+    void Jump();
     float posX, posY, posZ;
+    float velX, velY, velZ;
     float lookDir;
     float pitch;
+    bool jumping;
     InputHandler* inputHandler;
     World* world;
 };

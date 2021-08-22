@@ -18,6 +18,7 @@ void Camera::SetPos(glm::vec3 newPos) {
 
 void Camera::SetCameraFromPlayerData(Player* player) {
     pos = glm::vec3(player->GetPos());
+    pos.y += 1.8f;
     yaw = player->GetLookDir();
     pitch = player->GetPitch();
 }
