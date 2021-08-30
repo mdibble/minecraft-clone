@@ -1,7 +1,7 @@
 # Minecraft Clone
 
 <div>
-    <img src="./asset/screenshot.png" width="400">
+    <img src="./asset/screenshot.png" width="800">
 </div>
 
 ## About
